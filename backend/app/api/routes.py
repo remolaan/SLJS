@@ -181,13 +181,22 @@ def generate_image(req: PromptRequest):
 
 @router.get("/images/manifest")
 def image_manifest() -> dict:
-    """List all pre-generated static image URLs (zero API calls at runtime)."""
+    """List all pre-generated static image URLs (zero API calls at runtime).
+
+    Exposes both the raw keys (judgment) and the frontend's prefixed aliases
+    (scene_judgment / avatar_judge) so all lookups resolve.
+    """
     cache_dir = get_settings().image_cache_dir
     urls = {}
     for name in ALL_PROMPTS:
         url = image_url(name, cache_dir)
         if url:
             urls[name] = url
+            # frontend aliases
+            if name in ('judge', 'prosecution', 'defense', 'witness', 'intake'):
+                urls[f'avatar_{name}'] = url
+            else:
+                urls[f'scene_{name}'] = url
     return {"images": urls, "count": len(urls)}
 
 

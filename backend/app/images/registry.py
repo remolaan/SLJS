@@ -37,8 +37,15 @@ ALL_PROMPTS = {**{f"avatar_{k}": v for k, v in AVATAR_PROMPTS.items()}, **SCENE_
 
 
 def image_url(name: str, cache_dir: Path) -> str | None:
-    """Return the static URL for a named pre-generated image, or None."""
-    prompt = ALL_PROMPTS.get(name)
+    """Return the static URL for a named pre-generated image, or None.
+
+    Accepts both the raw key (e.g. 'judgment') and the frontend's
+    'scene_'/'avatar_' prefixed aliases (e.g. 'scene_judgment').
+    """
+    lookup = name
+    if name.startswith('scene_'):
+        lookup = name[len('scene_'):]
+    prompt = ALL_PROMPTS.get(lookup)
     if not prompt:
         return None
     key = cache_key(prompt)
