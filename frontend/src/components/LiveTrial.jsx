@@ -110,8 +110,14 @@ export default function LiveTrial({ seeds, onJudgment }) {
         <div className="chat-header">
           <div className="chat-title">
             <h2>{snap?.case?.title || 'Courtroom'}</h2>
-            <span className={`pill ${snap?.status === 'complete' ? 'ok' : ''}`}>{snap?.status || 'idle'}</span>
             {snap?.stage_label && <span className="pill stage-pill">{snap.stage_label}</span>}
+            <span className={`pill ${snap?.status === 'complete' ? 'ok' : ''}`}>{snap?.status || 'idle'}</span>
+            {/* compact case picker + actions inline */}
+            <select className="case-pick" value={seedKey} onChange={(e) => setSeedKey(e.target.value)} disabled={loading}>
+              {seeds.map((s) => <option key={s.key} value={s.key}>{s.title}</option>)}
+            </select>
+            <button className="mini-btn" onClick={startCase} disabled={loading}>{loading ? '…' : 'New'}</button>
+            {snap && <button className="mini-btn" onClick={resetTrial}>Reset</button>}
           </div>
           <div className="transport">
             <button title="Stop" className="t-btn stop" onClick={stop} disabled={!trialId}>⏹</button>
@@ -120,26 +126,9 @@ export default function LiveTrial({ seeds, onJudgment }) {
           </div>
         </div>
 
-        <div className="newcase">
-          <select value={seedKey} onChange={(e) => setSeedKey(e.target.value)} disabled={loading}>
-            {seeds.map((s) => <option key={s.key} value={s.key}>{s.title}</option>)}
-          </select>
-          <button className="primary" onClick={startCase} disabled={loading}>
-            {loading ? '…' : 'New Trial'}
-          </button>
-          {snap && <button className="primary reset" onClick={resetTrial}>Reset</button>}
-        </div>
-
         {error && <div className="error">{error}</div>}
 
-        <div className="chat-tabs">
-          <button className="all active" onClick={() => {}}>All</button>
-          {CHAT_ROLES.map((r) => (
-            <button key={r} className={`filter ${r}`}>{CHARACTERS[r].name}</button>
-          ))}
-        </div>
-
-        {/* chat feed: bigger avatar ABOVE, small text below */}
+        {/* chat feed */}
         <div className="chat-feed" ref={feedRef}>
           {transcript.map((turn, i) => (
             <ChatBubble key={i} turn={turn} />
@@ -194,14 +183,30 @@ function ChatBubble({ turn }) {
   const meta = CHARACTERS[turn.role] || CHARACTERS.intake
   return (
     <div className={`chat-bubble ${turn.role}`}>
-      <Avatar role={turn.role} size={46} />
-      <div className="chat-bubble-body">
+      <div className="chat-bubble-av">
+        <Avatar role={turn.role} size={44} />
+      </div>
+      <div className="chat-bubble-main">
         <div className="chat-bubble-meta">
           <b style={{ color: meta.color }}>{turn.speaker || meta.name}</b>
           {turn.label && <span className="chat-label">{turn.label}</span>}
         </div>
-        <div className="chat-bubble-text">{turn.content}</div>
+        <div className="chat-bubble-body">
+          <div className="chat-bubble-text">{renderText(turn.content)}</div>
+        </div>
       </div>
     </div>
   )
+}
+
+// Render simple markdown as clean text: turn **bold**, # headings, --- rules
+// into plain readable text (no literal symbols shown to the user).
+function renderText(raw) {
+  if (!raw) return ''
+  return String(raw)
+    .replace(/\*\*(.+?)\*\*/g, (_, s) => `[${s}]`)
+    .replace(/^#{1,6}\s+/gm, '')
+    .replace(/^-{3,}\s*$/gm, '')
+    .replace(/\*\s/g, '• ')
+    .replace(/^#{1,6}\s*/gm, '')
 }
