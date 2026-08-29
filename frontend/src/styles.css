@@ -264,20 +264,40 @@ button.primary:disabled { opacity: .5; cursor: not-allowed; }
   display: flex; flex-direction: column; gap: 12px; min-height: 300px;
   scroll-behavior: smooth;
 }
-.chat-bubble { display: flex; gap: 10px; max-width: 100%; align-items: flex-start; }
-.chat-bubble-main { min-width: 0; flex: 1; }
-.chat-bubble-meta { display: flex; align-items: center; gap: 8px; font-size: 12.5px; margin-bottom: 4px; }
-.chat-bubble-meta b { font-size: 13.5px; letter-spacing: 0.01em; }
-.chat-label { background: var(--bg-soft); padding: 2px 8px; border-radius: 10px; font-size: 11px; color: var(--muted); }
-.chat-bubble-body {
-  background: #fff; padding: 12px 14px; border-radius: 10px;
-  font-size: 14.5px; line-height: 1.6; white-space: pre-wrap;
-  border: 1px solid var(--line-soft);
-  box-shadow: 0 1px 2px rgba(0,0,0,.03);
-  word-break: break-word;
+/* chat bubble: avatar on top, text below (small font) */
+.chat-bubble {
+  display: flex; flex-direction: column; align-items: flex-start; gap: 6px;
+  max-width: 100%;
+  animation: fadeIn .25s ease;
 }
-.chat-bubble.judge .chat-bubble-body { background: #f3f1ec; border-color: #e0d8c8; }
-.chat-bubble.witness .chat-bubble-body { background: #fbf8ec; }
+.chat-bubble .avatar { box-shadow: 0 2px 8px rgba(0,0,0,.18); border-width: 3px; }
+.chat-bubble-main { min-width: 0; flex: 1; width: 100%; }
+.chat-bubble-meta {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 12px; color: var(--muted); margin-bottom: 4px;
+  padding: 0 2px;
+}
+.chat-bubble-meta b { font-size: 13px; font-weight: 700; letter-spacing: 0.01em; }
+.chat-label {
+  background: var(--bg-soft); padding: 2px 8px; border-radius: 10px;
+  font-size: 11px; color: var(--muted);
+}
+.chat-bubble-body {
+  background: #fff; padding: 12px 16px; border-radius: 12px;
+  border: 1px solid var(--line-soft);
+  box-shadow: 0 2px 6px rgba(0,0,0,.04);
+  width: 100%;
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+.chat-bubble-body:hover { transform: translateY(-1px); box-shadow: 0 4px 10px rgba(0,0,0,.07); }
+.chat-bubble-text {
+  font-size: 13px; line-height: 1.55; color: #2b3641;
+  white-space: pre-wrap; word-break: break-word;
+  max-height: 180px; overflow-y: auto;
+  scrollbar-width: thin;
+}
+.chat-bubble.judge .chat-bubble-body { background: linear-gradient(180deg,#f6f3ec,#f0ede4); border-color: #e0d8c8; }
+.chat-bubble.witness .chat-bubble-body { background: linear-gradient(180deg,#fbf8ec,#f5f1e2); border-color: #ead8b3; }
 .chat-bubble.prosecution .chat-bubble-body { border-left: 3px solid #b23b1e; }
 .chat-bubble.defense .chat-bubble-body { border-left: 3px solid #2f6db2; }
 .chat-bubble.intake .chat-bubble-body { border-left: 3px solid #8a7a3f; }

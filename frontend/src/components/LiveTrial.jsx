@@ -5,10 +5,29 @@ import CourtroomStage from './CourtroomStage.jsx'
 
 const CHAT_ROLES = ['judge', 'prosecution', 'defense', 'witness', 'intake']
 
+// Persist the live trial so it survives tab switches and page reloads.
+const STORE_KEY = 'ai_judge_trial_v1'
+function loadSaved() {
+  try {
+    const raw = localStorage.getItem(STORE_KEY)
+    if (!raw) return null
+    const obj = JSON.parse(raw)
+    if (obj?.snap && obj?.trialId) return obj
+  } catch { /* ignore */ }
+  return null
+}
+function saveTrial(trialId, snap) {
+  try { localStorage.setItem(STORE_KEY, JSON.stringify({ trialId, snap })) } catch {}
+}
+function clearTrial() {
+  try { localStorage.removeItem(STORE_KEY) } catch {}
+}
+
 export default function LiveTrial({ seeds, onJudgment }) {
+  const saved = loadSaved()
   const [seedKey, setSeedKey] = useState(seeds[0].key)
-  const [snap, setSnap] = useState(null)
-  const [trialId, setTrialId] = useState(null)
+  const [snap, setSnap] = useState(saved?.snap || null)
+  const [trialId, setTrialId] = useState(saved?.trialId || null)
   const [loading, setLoading] = useState(false)
   const [busy, setBusy] = useState(false)
   const [error, setError] = useState('')
@@ -21,6 +40,11 @@ export default function LiveTrial({ seeds, onJudgment }) {
   const feedRef = useRef(null)
   const judgmentSentRef = useRef(false)
 
+  // Persist snap + trialId whenever they change.
+  useEffect(() => {
+    if (snap && trialId) saveTrial(trialId, snap)
+  }, [snap, trialId])
+
   const startCase = async () => {
     setLoading(true); setError('')
     try {
@@ -30,6 +54,7 @@ export default function LiveTrial({ seeds, onJudgment }) {
       const s = await api.startTrial(caseInput)
       setSnap(s); setTrialId(s.trial_id); setAutoplay(true)
       judgmentSentRef.current = false
+      clearTrial(); saveTrial(s.trial_id, s)
     } catch (e) { setError(String(e.message || e)) }
     finally { setLoading(false) }
   }
@@ -70,6 +95,7 @@ export default function LiveTrial({ seeds, onJudgment }) {
 
   const stop = () => { setAutoplay(false); setInterrupt(true) }
   const start = () => { setInterrupt(false); setAutoplay(true); if (snap?.status !== 'complete') doStep() }
+  const resetTrial = () => { clearTrial(); setSnap(null); setTrialId(null); setAutoplay(false); setInterrupt(false) }
 
   useEffect(() => {
     if (feedRef.current) feedRef.current.scrollTop = feedRef.current.scrollHeight
@@ -79,20 +105,7 @@ export default function LiveTrial({ seeds, onJudgment }) {
 
   return (
     <div className="court-app">
-      {/* left: courtroom stage (big avatars positioned in the room) */}
-      <div className="stage-col">
-        {!snap ? (
-          <div className="scene-empty">
-            <button className="primary" onClick={startCase} disabled={loading}>
-              {loading ? '…' : '⚖️ Open the Court'}
-            </button>
-          </div>
-        ) : (
-          <CourtroomStage snapshot={snap} onAsk={(a) => { setQuestioner(a[0]); setAddressee(a[1]); setAskOpen(true) }} />
-        )}
-      </div>
-
-      {/* right: chat */}
+      {/* left: chat (main, bigger) */}
       <div className="chat-col">
         <div className="chat-header">
           <div className="chat-title">
@@ -114,10 +127,19 @@ export default function LiveTrial({ seeds, onJudgment }) {
           <button className="primary" onClick={startCase} disabled={loading}>
             {loading ? '…' : 'New Trial'}
           </button>
+          {snap && <button className="primary reset" onClick={resetTrial}>Reset</button>}
         </div>
 
         {error && <div className="error">{error}</div>}
 
+        <div className="chat-tabs">
+          <button className="all active" onClick={() => {}}>All</button>
+          {CHAT_ROLES.map((r) => (
+            <button key={r} className={`filter ${r}`}>{CHARACTERS[r].name}</button>
+          ))}
+        </div>
+
+        {/* chat feed: bigger avatar ABOVE, small text below */}
         <div className="chat-feed" ref={feedRef}>
           {transcript.map((turn, i) => (
             <ChatBubble key={i} turn={turn} />
@@ -151,25 +173,34 @@ export default function LiveTrial({ seeds, onJudgment }) {
           </button>
         )}
       </div>
+
+      {/* right: courtroom stage */}
+      <div className="stage-col">
+        {!snap ? (
+          <div className="scene-empty">
+            <button className="primary" onClick={startCase} disabled={loading}>
+              {loading ? '…' : '⚖️ Open the Court'}
+            </button>
+          </div>
+        ) : (
+          <CourtroomStage snapshot={snap} onAsk={(a) => { setQuestioner(a[0]); setAddressee(a[1]); setAskOpen(true) }} />
+        )}
+      </div>
     </div>
   )
 }
 
 function ChatBubble({ turn }) {
   const meta = CHARACTERS[turn.role] || CHARACTERS.intake
-  const isJudge = turn.role === 'judge'
-  const isWitness = turn.role === 'witness'
   return (
     <div className={`chat-bubble ${turn.role}`}>
-      <Avatar role={turn.role} size={38} />
-      <div className="chat-bubble-main">
+      <Avatar role={turn.role} size={46} />
+      <div className="chat-bubble-body">
         <div className="chat-bubble-meta">
           <b style={{ color: meta.color }}>{turn.speaker || meta.name}</b>
           {turn.label && <span className="chat-label">{turn.label}</span>}
         </div>
-        <div className={`chat-bubble-body ${isJudge ? 'judge' : ''} ${isWitness ? 'witness' : ''}`}>
-          {turn.content}
-        </div>
+        <div className="chat-bubble-text">{turn.content}</div>
       </div>
     </div>
   )
