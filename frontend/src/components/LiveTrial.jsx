@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import { api } from '../api.js'
 import Avatar, { CHARACTERS } from './Avatar.jsx'
 import SpotlightBar from './SpotlightBar.jsx'
-import Courtroom3D from './Courtroom3D.jsx'
+import SceneVisualizer from './SceneVisualizer.jsx'
 
 const CHAT_ROLES = ['judge', 'prosecution', 'defense', 'witness', 'intake']
 
@@ -190,7 +190,7 @@ export default function LiveTrial({ seeds, onJudgment }) {
           <div className="chat-feed" ref={feedRef}>
             {transcript.map((turn, i) => (
               <React.Fragment key={i}>
-                <ChatBubble turn={turn} />
+                <ChatBubble turn={turn} stream={i === transcript.length - 1} />
                 {myQuestions[i + 1] && <MyBubble q={myQuestions[i + 1]} />}
               </React.Fragment>
             ))}
@@ -252,15 +252,34 @@ export default function LiveTrial({ seeds, onJudgment }) {
             </button>
           </div>
         ) : (
-          <Courtroom3D snapshot={snap} />
+          <SceneVisualizer snapshot={snap} busy={busy} />
         )}
       </div>
     </div>
   )
 }
 
-function ChatBubble({ turn }) {
+// Reveal text gradually (streaming typewriter) for the newest message.
+function useTypewriter(full, stream) {
+  const [len, setLen] = useState(stream ? 0 : full.length)
+  useEffect(() => {
+    if (!stream) { setLen(full.length); return }
+    setLen(0)
+    let i = 0
+    const id = setInterval(() => {
+      i += 3 // reveal a few chars per tick for a natural streaming feel
+      setLen(i)
+      if (i >= full.length) clearInterval(id)
+    }, 18)
+    return () => clearInterval(id)
+  }, [full, stream])
+  return full.slice(0, len)
+}
+
+function ChatBubble({ turn, stream }) {
   const meta = CHARACTERS[turn.role] || CHARACTERS.intake
+  const full = renderText(turn.content)
+  const shown = useTypewriter(full, stream)
   return (
     <div className={`chat-bubble ${turn.role}`}>
       <div className="chat-bubble-av">
@@ -272,7 +291,10 @@ function ChatBubble({ turn }) {
           {turn.label && <span className="chat-label">{turn.label}</span>}
         </div>
         <div className="chat-bubble-body">
-          <div className="chat-bubble-text">{renderText(turn.content)}</div>
+          <div className="chat-bubble-text">
+            {shown}
+            {stream && shown.length < full.length && <span className="stream-caret">▌</span>}
+          </div>
         </div>
       </div>
     </div>

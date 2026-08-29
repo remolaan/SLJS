@@ -30,7 +30,7 @@ function getManifest() {
  * current stage (loaded instantly from static cache), the active speaker,
  * a MiniMax-M3 narration caption, and reference cards.
  */
-export default function SceneVisualizer({ snapshot }) {
+export default function SceneVisualizer({ snapshot, busy }) {
   const stage = snapshot?.stage_label || 'Case Intake'
   const speaker = snapshot?.current_node === 'judge' ? 'judge' : lastSpeaker(snapshot)
   const meta = CHARACTERS[speaker] || CHARACTERS.judge
@@ -76,10 +76,11 @@ export default function SceneVisualizer({ snapshot }) {
         )}
 
         <div className="scene-overlay">
-          <Avatar role={speaker} size={64} />
+          <Avatar role={speaker} size={88} />
           <div>
             <div className="scene-speaker">{meta.name}</div>
             <div className="scene-stage-label">{stage}</div>
+            <div className="scene-talking">{busy ? '● speaking…' : ''}</div>
           </div>
         </div>
 
