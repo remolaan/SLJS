@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import { api } from '../api.js'
 import Avatar, { CHARACTERS } from './Avatar.jsx'
 import SpotlightBar from './SpotlightBar.jsx'
+import SceneVisualizer from './SceneVisualizer.jsx'
 
 const CHAT_ROLES = ['judge', 'prosecution', 'defense', 'witness', 'intake']
 
@@ -117,7 +118,9 @@ export default function LiveTrial({ seeds, onJudgment }) {
   const transcript = snap?.transcript || []
 
   return (
-    <div className="courtroom-chat">
+    <div className="court-app">
+      {/* LEFT 1/3: interactive chat (you are a participant) */}
+      <div className="chat-col court-chat">
       {/* Header: case + framing + case picker */}
       <div className="chat-header">
         <div className="chat-title">
@@ -199,6 +202,20 @@ export default function LiveTrial({ seeds, onJudgment }) {
           </div>
         </>
       )}
+      </div>{/* end chat-col */}
+
+      {/* RIGHT 2/3: live courtroom scene image */}
+      <div className="scene-col court-scene">
+        {!snap ? (
+          <div className="scene-empty">
+            <button className="primary" onClick={startCase} disabled={loading}>
+              {loading ? '…' : '⚖️ Open the Court'}
+            </button>
+          </div>
+        ) : (
+          <SceneVisualizer snapshot={snap} />
+        )}
+      </div>
     </div>
   )
 }

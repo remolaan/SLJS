@@ -76,6 +76,70 @@ button.primary:disabled { opacity: .5; cursor: not-allowed; }
 /* ============================================================
    Courtroom chat — single-column group-chat experience
    ============================================================ */
+/* ============================================================
+   Courtroom: 1/3 interactive chat (left) + 2/3 live scene (right)
+   ============================================================ */
+.court-app {
+  display: grid;
+  grid-template-columns: minmax(360px, 1fr) 2fr;
+  gap: 16px;
+  align-items: stretch;
+  height: calc(100vh - 150px);
+  min-height: 560px;
+  margin-top: 16px;
+  overflow: hidden;
+}
+
+/* LEFT 1/3 — the chat panel */
+.chat-col.court-chat {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0,0,0,.04);
+  min-height: 0;
+}
+
+/* RIGHT 2/3 — the live scene panel */
+.scene-col.court-scene { min-height: 0; display: flex; }
+.court-scene .scene-panel { display: flex; flex-direction: column; gap: 12px; width: 100%; min-height: 0; }
+.court-scene .scene-stage {
+  position: relative; border-radius: 12px; overflow: hidden; background: #1a120b;
+  flex: 1 1 auto; min-height: 0; display: flex; align-items: center; justify-content: center;
+  box-shadow: inset 0 0 60px rgba(0,0,0,.4);
+}
+.court-scene .scene-img-big { width: 100%; height: 100%; object-fit: cover; }
+.court-scene .scene-loading { color: #fff; font-size: 18px; }
+.court-scene .scene-overlay {
+  position: absolute; bottom: 14px; left: 14px; display: flex; align-items: center; gap: 10px;
+  background: rgba(0,0,0,.6); padding: 8px 14px; border-radius: 30px; backdrop-filter: blur(3px);
+}
+.court-scene .scene-speaker { color: #fff; font-weight: 700; font-size: 15px; }
+.court-scene .scene-stage-label { color: #ffd98a; font-size: 12.5px; }
+.court-scene .scene-narration {
+  position: absolute; top: 12px; left: 12px; right: 12px; background: rgba(0,0,0,.65);
+  color: #fff; padding: 9px 14px; border-radius: 10px; font-size: 13.5px; line-height: 1.45;
+  animation: fadeIn .5s ease;
+}
+.court-scene .scene-cards {
+  display: flex; flex-wrap: wrap; gap: 10px; overflow-y: auto;
+  min-height: 0; flex: 0 1 auto; max-height: 200px;
+}
+.court-scene .scene-card {
+  flex: 1 1 45%; border: 1px solid var(--line); border-radius: 8px; background: var(--panel);
+  cursor: pointer; overflow: hidden; min-width: 220px;
+}
+.court-scene .scene-card-head { display: flex; align-items: center; gap: 6px; padding: 8px 12px; font-size: 13px; font-weight: 600; }
+.court-scene .scene-card-head .scene-card-toggle { margin-left: auto; color: var(--muted); }
+.court-scene .scene-card-body { padding: 8px 12px; font-size: 13px; white-space: pre-wrap; border-top: 1px solid var(--line); }
+.court-scene .scene-card.charges .scene-card-head { background: #fdecea; }
+.court-scene .scene-card.evidence .scene-card-head { background: #eef3fb; }
+.court-scene .scene-card.law .scene-card-head { background: #f5f1e8; }
+.court-scene .scene-card.cases .scene-card-head { background: #f3f0e8; }
+.court-scene .scene-card.verify .scene-card-head { background: #fdfaf2; }
+
 .courtroom-chat {
   margin-top: 16px;
   background: var(--panel);
