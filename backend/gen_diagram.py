@@ -1,0 +1,134 @@
+#!/usr/bin/env python3
+"""Generate the system-architecture diagram image (SVG).
+
+Shows how AI Judge works end-to-end: input -> intake -> prosecution/defense
+-> witness -> closings -> RAG retrieval -> judge -> judgment, plus the data
+flow. Rendered in the clean courtroom.ai light theme.
+"""
+from __future__ import annotations
+
+from pathlib import Path
+
+OUT = Path(__file__).resolve().parent / "docs" / "architecture.svg"
+
+SVG = """<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="720" viewBox="0 0 1200 720" font-family="Segoe UI, Helvetica, Arial, sans-serif">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#faf9f6"/>
+      <stop offset="1" stop-color="#f0ede6"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#2c3e50"/>
+      <stop offset="1" stop-color="#1a252f"/>
+    </linearGradient>
+    <marker id="arrow" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#7a8b99"/>
+    </marker>
+  </defs>
+
+  <rect width="1200" height="720" fill="url(#bg)"/>
+
+  <!-- Title -->
+  <text x="60" y="55" font-size="30" font-weight="700" fill="#1a252f">AI Judge — System Architecture</text>
+  <text x="60" y="80" font-size="15" fill="#5a6b7a">Courtroom Simulation for Sri Lanka · multi-agent LangGraph pipeline · RAG-grounded judgments</text>
+
+  <!-- ============ INPUT ROW ============ -->
+  <g>
+    <rect x="40" y="120" width="200" height="70" rx="10" fill="#fff" stroke="#2c3e50" stroke-width="2"/>
+    <text x="140" y="150" text-anchor="middle" font-size="16" font-weight="700" fill="#2c3e50">Case Input</text>
+    <text x="140" y="170" text-anchor="middle" font-size="12" fill="#5a6b7a">charge · facts · evidence · parties</text>
+  </g>
+
+  <!-- ============ INTAKE ============ -->
+  <g>
+    <rect x="320" y="120" width="200" height="70" rx="10" fill="#fff" stroke="#2c3e50" stroke-width="2"/>
+    <text x="420" y="150" text-anchor="middle" font-size="16" font-weight="700" fill="#2c3e50">Case Intake Agent</text>
+    <text x="420" y="170" text-anchor="middle" font-size="12" fill="#5a6b7a">maps charges → Penal Code sections</text>
+  </g>
+
+  <!-- ============ TRIAL PIPELINE (horizontal) ============ -->
+  <g>
+    <rect x="40" y="240" width="200" height="70" rx="10" fill="#fff" stroke="#2c3e50" stroke-width="2"/>
+    <text x="140" y="270" text-anchor="middle" font-size="15" font-weight="700" fill="#2c3e50">Prosecution</text>
+    <text x="140" y="290" text-anchor="middle" font-size="12" fill="#5a6b7a">opening · evidence</text>
+
+    <rect x="280" y="240" width="200" height="70" rx="10" fill="#fff" stroke="#2c3e50" stroke-width="2"/>
+    <text x="380" y="270" text-anchor="middle" font-size="15" font-weight="700" fill="#2c3e50">Defense</text>
+    <text x="380" y="290" text-anchor="middle" font-size="12" fill="#5a6b7a">response · mitigation</text>
+
+    <rect x="520" y="240" width="200" height="70" rx="10" fill="#fff" stroke="#2c3e50" stroke-width="2"/>
+    <text x="620" y="270" text-anchor="middle" font-size="15" font-weight="700" fill="#2c3e50">Witness</text>
+    <text x="620" y="290" text-anchor="middle" font-size="12" fill="#5a6b7a">testimony · cross-exam</text>
+
+    <rect x="760" y="240" width="200" height="70" rx="10" fill="#fff" stroke="#2c3e50" stroke-width="2"/>
+    <text x="860" y="270" text-anchor="middle" font-size="15" font-weight="700" fill="#2c3e50">Closings</text>
+    <text x="860" y="290" text-anchor="middle" font-size="12" fill="#5a6b7a">both sides</text>
+  </g>
+
+  <!-- ============ RAG ============ -->
+  <g>
+    <rect x="40" y="380" width="400" height="110" rx="12" fill="#eef4fb" stroke="#3a6ea5" stroke-width="2"/>
+    <text x="60" y="410" font-size="16" font-weight="700" fill="#3a6ea5">Retrieval-Augmented Generation (RAG)</text>
+    <text x="60" y="432" font-size="12" fill="#4a6a8a">Structure-aware chunking → Chroma vector DB</text>
+    <text x="60" y="452" font-size="12" fill="#4a6a8a">statutes by section · judgments by facts/reasoning/holding</text>
+    <text x="60" y="472" font-size="12" fill="#4a6a8a">· Penal Code · CPC Act · Evidence Ordinance · Constitution · precedent</text>
+  </g>
+
+  <!-- ============ JUDGE ============ -->
+  <g>
+    <rect x="560" y="380" width="280" height="110" rx="12" fill="#fff4e0" stroke="#b8860b" stroke-width="2"/>
+    <text x="580" y="410" font-size="18" font-weight="700" fill="#8a6d1f">Judge Agent</text>
+    <text x="580" y="434" font-size="12" fill="#7a6a3a">weighs both sides · applies burden of proof</text>
+    <text x="580" y="454" font-size="12" fill="#7a6a3a">grounds reasoning in retrieved law</text>
+    <text x="580" y="474" font-size="12" fill="#7a6a3a">hallucination / citation check</text>
+  </g>
+
+  <!-- ============ OUTPUT ============ -->
+  <g>
+    <rect x="930" y="380" width="230" height="110" rx="12" fill="#eaf7ea" stroke="#2e7d32" stroke-width="2"/>
+    <text x="1045" y="410" text-anchor="middle" font-size="16" font-weight="700" fill="#2e7d32">Structured Judgment</text>
+    <text x="1045" y="434" text-anchor="middle" font-size="12" fill="#3a7d3a">facts found · legal reasoning</text>
+    <text x="1045" y="454" text-anchor="middle" font-size="12" fill="#3a7d3a">verdict · sentence · release</text>
+    <text x="1045" y="474" text-anchor="middle" font-size="12" fill="#3a7d3a">inline citations + sources</text>
+  </g>
+
+  <!-- ============ EVAL ============ -->
+  <g>
+    <rect x="40" y="560" width="400" height="100" rx="12" fill="#f6f0fa" stroke="#7b4fb0" stroke-width="2"/>
+    <text x="60" y="590" font-size="16" font-weight="700" fill="#7b4fb0">Evaluation & Bias Checks</text>
+    <text x="60" y="612" font-size="12" fill="#6a5a8a">compare vs anonymized real outcomes · accuracy score</text>
+    <text x="60" y="632" font-size="12" fill="#6a5a8a">hallucination rate · matched-scenario bias check</text>
+  </g>
+
+  <g>
+    <rect x="560" y="560" width="600" height="100" rx="12" fill="#fdf6f0" stroke="#b06a2e" stroke-width="2"/>
+    <text x="580" y="590" font-size="16" font-weight="700" fill="#a05a24">Ethics & Limitations</text>
+    <text x="580" y="612" font-size="12" fill="#8a6a4a">research/education simulation · NOT deployable adjudication</text>
+    <text x="580" y="632" font-size="12" fill="#8a6a4a">no real persons/cases · due process & appeal rights unresolved</text>
+  </g>
+
+  <!-- ============ ARROWS ============ -->
+  <line x1="240" y1="155" x2="315" y2="155" stroke="#7a8b99" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="140" y1="190" x2="140" y2="235" stroke="#7a8b99" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="240" y1="275" x2="275" y2="275" stroke="#7a8b99" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="480" y1="275" x2="515" y2="275" stroke="#7a8b99" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="720" y1="275" x2="755" y2="275" stroke="#7a8b99" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="960" y1="310" x2="960" y2="340" stroke="#7a8b99" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="960" y1="340" x2="700" y2="340" stroke="#7a8b99" stroke-width="2"/>
+  <line x1="700" y1="340" x2="700" y2="375" stroke="#7a8b99" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="440" y1="380" x2="555" y2="435" stroke="#7a8b99" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="845" y1="435" x2="925" y2="435" stroke="#7a8b99" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <text x="60" y="690" font-size="12" fill="#8a9aa8">Each agent = a distinct LLM call with its own role prompt. Judge retrieves real Sri Lankan law via RAG (not memory). Free OpenRouter models power the agents.</text>
+</svg>
+"""
+
+
+def main() -> None:
+    OUT.parent.mkdir(parents=True, exist_ok=True)
+    OUT.write_text(SVG, encoding="utf-8")
+    print(f"Wrote {OUT}")
+
+
+if __name__ == "__main__":
+    main()
