@@ -41,8 +41,32 @@ export default function LiveTrial({ seeds, onJudgment }) {
   // Questions the person has sent, rendered as their own outgoing chat bubbles
   // so it feels like they're a participant inside the hearing, not a spectator.
   const [myQuestions, setMyQuestions] = useState({}) // keyed by transcript length at time of send
+  const [muted, setMuted] = useState(false)
   const feedRef = useRef(null)
   const judgmentSentRef = useRef(false)
+
+  // Text-to-speech: read each new transcript turn aloud (browser speechSynthesis).
+  const spokeRef = useRef(0)
+  useEffect(() => {
+    if (muted || typeof window === 'undefined' || !('speechSynthesis' in window)) return
+    const tr = snap?.transcript || []
+    if (tr.length > spokeRef.current) {
+      const turn = tr[tr.length - 1]
+      spokeRef.current = tr.length
+      // skip intake (long notes) unless it's short
+      const text = String(turn.content || '')
+      if (text && text.length < 1400) {
+        try {
+          window.speechSynthesis.cancel()
+          const u = new SpeechSynthesisUtterance(text.replace(/\[/g, '').replace(/\]/g, ''))
+          u.rate = 1.05
+          u.pitch = 1
+          window.speechSynthesis.speak(u)
+        } catch { /* ignore */ }
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [snap?.transcript?.length, muted])
 
   // Persist snap + trialId whenever they change.
   useEffect(() => {
@@ -133,6 +157,13 @@ export default function LiveTrial({ seeds, onJudgment }) {
           </select>
           <button className="mini-btn" onClick={startCase} disabled={loading}>{loading ? '…' : (snap ? 'New Trial' : '⚖️ Begin')}</button>
           {snap && <button className="mini-btn ghost" onClick={resetTrial}>Reset</button>}
+          <button
+            className={`mini-btn ${muted ? 'ghost' : ''}`}
+            onClick={() => setMuted((m) => !m)}
+            title={muted ? 'Unmute voice' : 'Mute voice'}
+          >
+            {muted ? '🔇' : '🔊'}
+          </button>
         </div>
       </div>
 
