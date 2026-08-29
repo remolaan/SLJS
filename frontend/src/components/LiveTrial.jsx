@@ -44,6 +44,10 @@ export default function LiveTrial({ seeds, onJudgment }) {
   const [muted, setMuted] = useState(false)
   const feedRef = useRef(null)
   const judgmentSentRef = useRef(false)
+  const pausedRef = useRef(false)
+  const autoplayRef = useRef(false)
+  // keep autoplayRef in sync
+  useEffect(() => { autoplayRef.current = autoplay }, [autoplay])
 
   // Text-to-speech: read each new transcript turn aloud (browser speechSynthesis).
   const spokeRef = useRef(0)
@@ -91,8 +95,12 @@ export default function LiveTrial({ seeds, onJudgment }) {
   const doStep = async () => {
     if (!trialId || busy || interrupt) return
     setBusy(true)
+    pausedRef.current = false
     try {
       const s = await api.trialStep(trialId)
+      // If the user paused while this step was in-flight, discard the result
+      // so the chat visibly stops.
+      if (pausedRef.current || !autoplayRef.current) return
       setSnap(s)
       if (s.status === 'complete') {
         setAutoplay(false)
@@ -129,8 +137,8 @@ export default function LiveTrial({ seeds, onJudgment }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [autoplay, snap, trialId, interrupt, busy])
 
-  const stop = () => { setAutoplay(false); setInterrupt(true) }
-  const start = () => { setInterrupt(false); setAutoplay(true); if (snap?.status !== 'complete') doStep() }
+  const stop = () => { pausedRef.current = true; setAutoplay(false); setInterrupt(true) }
+  const start = () => { pausedRef.current = false; setInterrupt(false); setAutoplay(true); if (snap?.status !== 'complete') doStep() }
   const resetTrial = () => {
     clearTrial(); setSnap(null); setTrialId(null); setAutoplay(false); setInterrupt(false); setMyQuestions({})
   }
@@ -196,7 +204,7 @@ export default function LiveTrial({ seeds, onJudgment }) {
           {/* Composer */}
           <div className="composer">
             <div className="transport">
-              <button title="Pause" className="t-btn pause" onClick={() => setAutoplay(false)} disabled={!autoplay}>⏸ Pause</button>
+              <button title="Pause" className="t-btn pause" onClick={() => { pausedRef.current = true; setAutoplay(false) }} disabled={!autoplay}>⏸ Pause</button>
               <button title="Continue" className="t-btn start" onClick={start} disabled={!trialId || snap?.status === 'complete' || busy}>▶ Continue</button>
               <button
                 className="t-btn autoplay"
