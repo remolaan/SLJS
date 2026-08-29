@@ -9,6 +9,7 @@ __pycache__/
 
 # Data / models
 backend/data/vectorstore/
+backend/data/runs/
 *.onnx
 .chroma/
 
