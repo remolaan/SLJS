@@ -45,10 +45,14 @@ def chunk_statute(text: str, filename: str, source_title: str) -> list[Chunk]:
     preamble = _preamble(lines)
     chunks: list[Chunk] = []
 
-    # Split on section headings like "s.324" / "Section 324" / "324." at line start.
-    pattern = re.compile(r"^\s*(?:s(?:ection)?\.?\s*|Section\s+)(\d+)\s*[.:-]", re.I)
+    # Split on section headings like "s.324" / "Section 324" / "324." / "324. " at line start.
+    pattern = re.compile(
+        r"^\s*(?:(?:s(?:ection)?\.?\s*|Section\s+)(\d+)\s*[.:-]|(\d{1,4})\s*\.\s*(?!\d))",
+        re.I,
+    )
     current_sec: str | None = None
     current_lines: list[str] = []
+    _seen: dict[str, int] = {}  # section number -> occurrence count (dedupe)
 
     def flush():
         nonlocal current_lines
@@ -56,9 +60,12 @@ def chunk_statute(text: str, filename: str, source_title: str) -> list[Chunk]:
             body = "\n".join(current_lines).strip()
             if body:
                 cite = f"{source_title}, s.{current_sec}"
+                n = _seen.get(current_sec, 0) + 1
+                _seen[current_sec] = n
+                key = current_sec if n == 1 else f"{current_sec}_{n}"
                 chunks.append(
                     Chunk(
-                        chunk_id=f"{filename}::s{current_sec}",
+                        chunk_id=f"{filename}::s{key}",
                         doc_type="statute",
                         source=filename,
                         cite=cite,
@@ -71,7 +78,7 @@ def chunk_statute(text: str, filename: str, source_title: str) -> list[Chunk]:
         m = pattern.match(line)
         if m:
             flush()
-            current_sec = m.group(1)
+            current_sec = m.group(1) or m.group(2)
             current_lines = [line]
         else:
             current_lines.append(line)

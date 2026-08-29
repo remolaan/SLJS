@@ -21,4 +21,6 @@ build/
 # Misc
 .DS_Store
 *.log
-ui_current.png
+
+# raw corpus binaries (text extracts are what RAG uses)
+corpus/raw/*.bin

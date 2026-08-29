@@ -17,7 +17,6 @@ COLLECTION_NAME = "sri_lankan_law"
 def _id_for(chunk: Chunk) -> str:
     return hashlib.sha1(chunk.chunk_id.encode("utf-8")).hexdigest()[:24]
 
-
 class VectorStore:
     """Chroma-backed store for statute + precedent chunks."""
 
