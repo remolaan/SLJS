@@ -1,0 +1,14 @@
+type: statute
+title: Code of Criminal Procedure Act, No. 15 of 1979
+
+s.2: Criminal courts. There shall be the following classes of criminal
+courts in Sri Lanka: the High Court, the Magistrate's Courts and such other
+courts as may be established by law.
+
+s.167: Trial before High Court. Trials before the High Court shall be by a
+single judge and, save as otherwise provided, in accordance with the
+provisions of this Code.
+
+s.303: Framing of charges. The accused shall be informed of the charge
+against him at the commencement of the trial and shall be asked whether he
+pleads guilty or not guilty.

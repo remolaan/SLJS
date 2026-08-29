@@ -1,0 +1,241 @@
+{
+  "run_id": "83e4420bf873",
+  "saved_at": 1787997255.7417252,
+  "data": {
+    "trial_id": "83e4420bf873",
+    "status": "complete",
+    "current_node": "finalize",
+    "stage_label": "Deliberation",
+    "steps_done": [
+      "intake",
+      "prosecution_opening",
+      "defense_opening",
+      "prosecution_evidence",
+      "witness",
+      "defense_evidence",
+      "prosecution_closing",
+      "defense_closing",
+      "retrieve",
+      "judge",
+      "finalize"
+    ],
+    "steps_remaining": [],
+    "transcript": [
+      {
+        "role": "intake",
+        "speaker": "Case Intake",
+        "label": "Case Intake",
+        "content": "Mapped offences: ['Penal Code, s.324 - voluntarily causing grievous hurt']\nNotes: STUB: structured intake output."
+      },
+      {
+        "role": "prosecution",
+        "speaker": "Prosecution Opening",
+        "label": "Prosecution Opening",
+        "content": "[STUB stub] prosecution: Simulated prosecution submission for the hypothetical case. Relies on the Sri Lankan Penal Code, Code of Criminal Procedure Act, Evidence Ordinance, and cited precedents per the brief."
+      },
+      {
+        "role": "defense",
+        "speaker": "Defense Response",
+        "label": "Defense Response",
+        "content": "[STUB stub] prosecution: Simulated prosecution submission for the hypothetical case. Relies on the Sri Lankan Penal Code, Code of Criminal Procedure Act, Evidence Ordinance, and cited precedents per the brief."
+      },
+      {
+        "role": "prosecution",
+        "speaker": "Prosecution Evidence",
+        "label": "Prosecution Evidence",
+        "content": "[STUB stub] prosecution: Simulated prosecution submission for the hypothetical case. Relies on the Sri Lankan Penal Code, Code of Criminal Procedure Act, Evidence Ordinance, and cited precedents per the brief."
+      },
+      {
+        "role": "witness",
+        "speaker": "PW1",
+        "label": "Witness: PW1",
+        "content": "[STUB stub] witness: Simulated witness submission for the hypothetical case. Relies on the Sri Lankan Penal Code, Code of Criminal Procedure Act, Evidence Ordinance, and cited precedents per the brief."
+      },
+      {
+        "role": "defense",
+        "speaker": "Defense Evidence",
+        "label": "Defense Evidence",
+        "content": "[STUB stub] prosecution: Simulated prosecution submission for the hypothetical case. Relies on the Sri Lankan Penal Code, Code of Criminal Procedure Act, Evidence Ordinance, and cited precedents per the brief."
+      },
+      {
+        "role": "prosecution",
+        "speaker": "Prosecution Closing",
+        "label": "Prosecution Closing",
+        "content": "[STUB stub] prosecution: Simulated prosecution submission for the hypothetical case. Relies on the Sri Lankan Penal Code, Code of Criminal Procedure Act, Evidence Ordinance, and cited precedents per the brief."
+      },
+      {
+        "role": "defense",
+        "speaker": "Defense Closing",
+        "label": "Defense Closing",
+        "content": "[STUB stub] prosecution: Simulated prosecution submission for the hypothetical case. Relies on the Sri Lankan Penal Code, Code of Criminal Procedure Act, Evidence Ordinance, and cited precedents per the brief."
+      },
+      {
+        "role": "judge",
+        "speaker": "The Court",
+        "label": "Judgment",
+        "content": "VERDICT: guilty\nSTUB: The injury constitutes grievous hurt under Penal Code s.322. Applying s.324 and King v Perera, the absence of premeditation in a sudden quarrel weighs in mitigation.\nCitations: ['Penal Code, s.324', 'Penal Code, s.322', 'King v Perera [2024] SLHC 0123']"
+      }
+    ],
+    "case": {
+      "title": "The Shophouse Theft (Hypothetical)",
+      "court_tier": "High Court",
+      "proceeding": "criminal",
+      "jurisdiction": "Sri Lanka",
+      "parties": [
+        {
+          "name": "S. Fernando (pseudonym)",
+          "role": "accused",
+          "pseudonym": true
+        },
+        {
+          "name": "M. Weerasinghe (pseudonym)",
+          "role": "victim",
+          "pseudonym": true
+        }
+      ],
+      "charges": [
+        {
+          "description": "theft of movable property",
+          "statute": "Penal Code",
+          "section": "367",
+          "max_penalty": "imprisonment"
+        },
+        {
+          "description": "house-trespass by night",
+          "statute": "Penal Code",
+          "section": "431",
+          "max_penalty": "imprisonment"
+        }
+      ],
+      "facts": "A shophouse was entered after sunset by forcing the rear lock. Cash and goods were removed. The accused was found nearby with some of the goods. The accused denied the entry, stating he found the goods abandoned. There was no direct eyewitness to the entry.",
+      "evidence": [
+        {
+          "type": "physical",
+          "description": "Forced lock and recovered goods matched to the shophouse.",
+          "relevance": "connects accused to the property",
+          "admitted": null
+        },
+        {
+          "type": "circumstantial",
+          "description": "Accused found in possession of the goods shortly after.",
+          "relevance": "recent possession inference",
+          "admitted": null
+        }
+      ],
+      "burden_of_proof": "beyond reasonable doubt"
+    },
+    "judgment": {
+      "facts_found": "The accused struck the victim with a wooden crate in the course of a sudden market quarrel, fracturing the victim's arm.",
+      "legal_reasoning": "STUB: The injury constitutes grievous hurt under Penal Code s.322. Applying s.324 and King v Perera, the absence of premeditation in a sudden quarrel weighs in mitigation.",
+      "citations": [
+        "Penal Code, s.324",
+        "Penal Code, s.322",
+        "King v Perera [2024] SLHC 0123"
+      ],
+      "verdict": "guilty",
+      "verdict_confidence": 0.85,
+      "insufficient_evidence": false,
+      "sentence": {
+        "custodial": true,
+        "term_years": 2.0,
+        "term_months": 0.0,
+        "fine_lkr": 50000.0,
+        "conditions": [
+          "good behaviour"
+        ],
+        "note": "STUB sentence for offline demo"
+      },
+      "release": false,
+      "dissent_notes": "",
+      "methodology_warning": "AI simulation for research/education only \u2014 not a legal opinion."
+    },
+    "retrieved_context": [
+      {
+        "statute_id": "c9b4e62e60030ceb815ca0d3",
+        "text": "Penal Code, s.367\ns.367: Theft. Whoever, intending to take dishonestly any movable property\nout of the possession of any person without that person's consent, moves\nthat property in order to such taking, is said to commit theft.",
+        "relevance": 0.7725,
+        "source": "statute"
+      },
+      {
+        "statute_id": "aa0e04dc8c644e14a5f9f7e4",
+        "text": "Penal Code, s.380\ns.380: Robbery. In all robbery there is either theft or extortion. Theft is\nrobbery if, in order to the committing of the theft, or in committing it,\nor in carrying away or attempting to carry away property obtained by the\ntheft, the offender voluntarily causes or attempts to cause to any person\ndeath or hurt or wrongful restraint.",
+        "relevance": 0.5632,
+        "source": "statute"
+      },
+      {
+        "statute_id": "5cfcf06e37fd28d4d7478e3c",
+        "text": "Penal Code, s.431\ns.431: House-trespass by night. Whoever commits house-trespass after sunset\nand before sunrise is said to commit house-trespass by night.",
+        "relevance": 0.5002,
+        "source": "statute"
+      },
+      {
+        "statute_id": "d3f368d30161792551da9705",
+        "text": "Penal Code, s.327\ns.327: Criminal force. Whoever intentionally uses force to any person,\nwithout that person's consent, in order to the committing of any offence,\nor intending by the use of such force to cause injury, fear or annoyance,\ncommits the offence of using criminal force.",
+        "relevance": 0.4472,
+        "source": "statute"
+      },
+      {
+        "statute_id": "837acd24fdb7f846d9949339",
+        "text": "Penal Code, s.294\ns.294: Culpable homicide. Whoever causes death by doing an act with the\nintention of causing death, or with the intention of causing such bodily\ninjury as is likely to cause death, commits the offence of culpable homicide.",
+        "relevance": 0.4278,
+        "source": "statute"
+      },
+      {
+        "statute_id": "8b922fe6b6e71176b8de9979",
+        "text": "Penal Code, s.296\ns.296: Culpable homicide amounting to murder. Culpable homicide is murder\nwhere the act is done with the intention of causing death, or with the\nintention of causing such bodily injury as the offender knows to be likely\nto cause the death of the person to whom the harm is caused.",
+        "relevance": 0.407,
+        "source": "statute"
+      },
+      {
+        "statute_id": "6602ba05714f1a4214028f96",
+        "text": "judgments silva v ag [Facts]\nFacts:\nThe accused was convicted of theft of movable property contrary to section\n367 of the Penal Code. At trial the prosecution relied on circumstantial\nevidence and a confession. The accused appealed, arguing the confession was\ninvoluntary and that the circumstantial evidence did not exclude every\nreasonable hypothesis consistent with innocence.",
+        "relevance": 0.5119,
+        "source": "precedent"
+      },
+      {
+        "statute_id": "98033611d2f850bf79a34e40",
+        "text": "judgments king v perera [Facts]\nFacts:\nThe accused was charged with voluntarily causing grievous hurt contrary to\nsection 324 of the Penal Code following an altercation in a marketplace.\nThe victim suffered a fracture of the arm. The accused claimed the injury\nresulted from a sudden quarrel and that he acted without premeditation and\nin the heat of the moment.",
+        "relevance": 0.3228,
+        "source": "precedent"
+      },
+      {
+        "statute_id": "2064192fdff89c3dea1219ed",
+        "text": "judgments silva v ag [Reasoning]\nReasoning:\nThe Court reiterated that a confession must be voluntary to be admissible\nunder the Evidence Ordinance. Circumstantial evidence may found a\nconviction only where it is consistent with guilt and inconsistent with any\nreasonable hypothesis of innocence. The prosecution bears the burden\nthroughout.",
+        "relevance": 0.3029,
+        "source": "precedent"
+      },
+      {
+        "statute_id": "30239c2709a0187cc37cf1fc",
+        "text": "judgments king v perera [Reasoning]\nReasoning:\nThe Court held that a fracture of a bone constitutes grievous hurt under\nsection 322. However, where the harm is inflicted in the course of a sudden\nfight without premeditation, the case may fall within the mitigating\nframework, and the court may temper the sentence accordingly. The burden\nremains on the prosecution to establish the elements of the offence beyond\nreasonable doubt.",
+        "relevance": 0.2795,
+        "source": "precedent"
+      },
+      {
+        "statute_id": "fa5408627415408bdbb0d3dc",
+        "text": "judgments king v perera [Held]\nHeld:\nConviction under section 324 sustained, but the custodial sentence was\nreduced in light of provocation and the absence of premeditation.",
+        "relevance": 0.2466,
+        "source": "precedent"
+      }
+    ],
+    "citation_checks": [
+      {
+        "citation": "Penal Code, s.324",
+        "supported": true,
+        "matched_source": "statute",
+        "note": "Verified against retrieved law."
+      },
+      {
+        "citation": "Penal Code, s.322",
+        "supported": true,
+        "matched_source": "statute",
+        "note": "Verified against retrieved law."
+      },
+      {
+        "citation": "King v Perera [2024] SLHC 0123",
+        "supported": true,
+        "matched_source": "precedent",
+        "note": "Verified against retrieved law."
+      }
+    ]
+  }
+}

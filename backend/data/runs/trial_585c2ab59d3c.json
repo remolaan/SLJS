@@ -1,0 +1,205 @@
+{
+  "run_id": "585c2ab59d3c",
+  "saved_at": 1787992136.8682399,
+  "data": {
+    "trial_id": "585c2ab59d3c",
+    "status": "running",
+    "current_node": "retrieve",
+    "stage_label": "Law Retrieval (RAG)",
+    "steps_done": [
+      "intake",
+      "prosecution_opening",
+      "defense_opening",
+      "prosecution_evidence",
+      "witness",
+      "defense_evidence",
+      "prosecution_closing",
+      "defense_closing",
+      "retrieve"
+    ],
+    "steps_remaining": [
+      "judge",
+      "finalize"
+    ],
+    "transcript": [
+      {
+        "role": "intake",
+        "speaker": "Case Intake",
+        "label": "Case Intake",
+        "content": "Mapped offences: ['Penal Code, s.324 - voluntarily causing grievous hurt']\nNotes: STUB: structured intake output."
+      },
+      {
+        "role": "prosecution",
+        "speaker": "Prosecution Opening",
+        "label": "Prosecution Opening",
+        "content": "[STUB stub] prosecution: Simulated prosecution submission for the hypothetical case. Relies on the Sri Lankan Penal Code, Code of Criminal Procedure Act, Evidence Ordinance, and cited precedents per the brief."
+      },
+      {
+        "role": "defense",
+        "speaker": "Defense Response",
+        "label": "Defense Response",
+        "content": "[STUB stub] prosecution: Simulated prosecution submission for the hypothetical case. Relies on the Sri Lankan Penal Code, Code of Criminal Procedure Act, Evidence Ordinance, and cited precedents per the brief."
+      },
+      {
+        "role": "prosecution",
+        "speaker": "Prosecution Evidence",
+        "label": "Prosecution Evidence",
+        "content": "[STUB stub] prosecution: Simulated prosecution submission for the hypothetical case. Relies on the Sri Lankan Penal Code, Code of Criminal Procedure Act, Evidence Ordinance, and cited precedents per the brief."
+      },
+      {
+        "role": "judge",
+        "speaker": "The Court",
+        "label": "Judge question",
+        "content": "Where were you when you saw the altercation begin?"
+      },
+      {
+        "role": "witness",
+        "speaker": "Witness",
+        "label": "Witness answer",
+        "content": "[STUB stub] witness: Simulated witness submission for the hypothetical case. Relies on the Sri Lankan Penal Code, Code of Criminal Procedure Act, Evidence Ordinance, and cited precedents per the brief."
+      },
+      {
+        "role": "witness",
+        "speaker": "PW1",
+        "label": "Witness: PW1",
+        "content": "[STUB stub] witness: Simulated witness submission for the hypothetical case. Relies on the Sri Lankan Penal Code, Code of Criminal Procedure Act, Evidence Ordinance, and cited precedents per the brief."
+      },
+      {
+        "role": "defense",
+        "speaker": "Defense Evidence",
+        "label": "Defense Evidence",
+        "content": "[STUB stub] prosecution: Simulated prosecution submission for the hypothetical case. Relies on the Sri Lankan Penal Code, Code of Criminal Procedure Act, Evidence Ordinance, and cited precedents per the brief."
+      },
+      {
+        "role": "prosecution",
+        "speaker": "Prosecution Closing",
+        "label": "Prosecution Closing",
+        "content": "[STUB stub] prosecution: Simulated prosecution submission for the hypothetical case. Relies on the Sri Lankan Penal Code, Code of Criminal Procedure Act, Evidence Ordinance, and cited precedents per the brief."
+      },
+      {
+        "role": "defense",
+        "speaker": "Defense Closing",
+        "label": "Defense Closing",
+        "content": "[STUB stub] prosecution: Simulated prosecution submission for the hypothetical case. Relies on the Sri Lankan Penal Code, Code of Criminal Procedure Act, Evidence Ordinance, and cited precedents per the brief."
+      }
+    ],
+    "case": {
+      "title": "The Market Altercation (Hypothetical)",
+      "court_tier": "High Court",
+      "proceeding": "criminal",
+      "jurisdiction": "Sri Lanka",
+      "parties": [
+        {
+          "name": "A. Bandara (pseudonym)",
+          "role": "accused",
+          "pseudonym": true
+        },
+        {
+          "name": "K. Nadeesha (pseudonym)",
+          "role": "victim",
+          "pseudonym": true
+        }
+      ],
+      "charges": [
+        {
+          "description": "voluntarily causing grievous hurt",
+          "statute": "Penal Code",
+          "section": "324",
+          "max_penalty": "imprisonment up to 7 years and fine"
+        }
+      ],
+      "facts": "On a market day, a dispute arose between two vendors over a stall boundary. The argument escalated and the accused struck the victim with a wooden crate, fracturing the victim's arm. The accused claims the blow was struck in the heat of a sudden quarrel and without prior planning. The victim was treated at a hospital and discharged after ten days.",
+      "evidence": [
+        {
+          "type": "witness",
+          "description": "Two bystanders who saw the altercation begin and escalate.",
+          "relevance": "corroborates sudden quarrel / provocation",
+          "admitted": null
+        },
+        {
+          "type": "documentary",
+          "description": "Hospital admission record documenting the arm fracture.",
+          "relevance": "establishes grievous hurt under s.322",
+          "admitted": null
+        },
+        {
+          "type": "physical",
+          "description": "The wooden crate recovered at the scene.",
+          "relevance": "corroborates the manner of injury",
+          "admitted": null
+        }
+      ],
+      "burden_of_proof": "beyond reasonable doubt"
+    },
+    "judgment": null,
+    "retrieved_context": [
+      {
+        "statute_id": "da16de5d004b75c3162919e5",
+        "text": "Penal Code, s.324\ns.324: Voluntarily causing grievous hurt. Whoever voluntarily causes\ngrievous hurt shall be punished with imprisonment of either description\nfor a term which may extend to seven years and shall also be liable to\nfine.",
+        "relevance": 0.7094,
+        "source": "statute"
+      },
+      {
+        "statute_id": "afe0cd9a609b0f2ec176240f",
+        "text": "Penal Code, s.322\ns.322: Grievous hurt. Hurt is grievous when it causes permanent loss of\nsight or hearing, permanent disfigurement, fracture or dislocation of a\nbone, or any hurt which endangers life or causes the sufferer to be\nduring the space of twenty days in severe bodily pain or unable to follow\nhis ordinary pursuits.",
+        "relevance": 0.6506,
+        "source": "statute"
+      },
+      {
+        "statute_id": "51c76ae979d495416e66fa27",
+        "text": "Penal Code, s.314\ns.314: Hurt. Whoever causes bodily pain, disease or infirmity to any person\nis said to cause hurt.",
+        "relevance": 0.5311,
+        "source": "statute"
+      },
+      {
+        "statute_id": "0c2ab79d45b183e10860fafb",
+        "text": "Penal Code, s.328\ns.328: Assault or criminal force otherwise than on grave provocation.\nWhoever assaults or uses criminal force to any person otherwise than on\ngrave and sudden provocation commits a simple offence punishable as\nprescribed.",
+        "relevance": 0.4396,
+        "source": "statute"
+      },
+      {
+        "statute_id": "d3f368d30161792551da9705",
+        "text": "Penal Code, s.327\ns.327: Criminal force. Whoever intentionally uses force to any person,\nwithout that person's consent, in order to the committing of any offence,\nor intending by the use of such force to cause injury, fear or annoyance,\ncommits the offence of using criminal force.",
+        "relevance": 0.4327,
+        "source": "statute"
+      },
+      {
+        "statute_id": "558d465c5613c1c7752bef87",
+        "text": "Penal Code, s.326\ns.326: Assault. Whoever makes any gesture, or prepares anything, intending\nthat the gesture or thing shall be used against the person of another, or\nknowing it to be likely that it will be so used, commits an assault.",
+        "relevance": 0.4284,
+        "source": "statute"
+      },
+      {
+        "statute_id": "98033611d2f850bf79a34e40",
+        "text": "judgments king v perera [Facts]\nFacts:\nThe accused was charged with voluntarily causing grievous hurt contrary to\nsection 324 of the Penal Code following an altercation in a marketplace.\nThe victim suffered a fracture of the arm. The accused claimed the injury\nresulted from a sudden quarrel and that he acted without premeditation and\nin the heat of the moment.",
+        "relevance": 0.7293,
+        "source": "precedent"
+      },
+      {
+        "statute_id": "30239c2709a0187cc37cf1fc",
+        "text": "judgments king v perera [Reasoning]\nReasoning:\nThe Court held that a fracture of a bone constitutes grievous hurt under\nsection 322. However, where the harm is inflicted in the course of a sudden\nfight without premeditation, the case may fall within the mitigating\nframework, and the court may temper the sentence accordingly. The burden\nremains on the prosecution to establish the elements of the offence beyond\nreasonable doubt.",
+        "relevance": 0.6463,
+        "source": "precedent"
+      },
+      {
+        "statute_id": "7ce67b14367e09b1e430001a",
+        "text": "judgments king v perera [Issues]\nIssues:\nWhether the injury amounted to grievous hurt within section 322; whether\nthe sudden quarrel negated the intent required for the aggravated offence.",
+        "relevance": 0.6023,
+        "source": "precedent"
+      },
+      {
+        "statute_id": "6602ba05714f1a4214028f96",
+        "text": "judgments silva v ag [Facts]\nFacts:\nThe accused was convicted of theft of movable property contrary to section\n367 of the Penal Code. At trial the prosecution relied on circumstantial\nevidence and a confession. The accused appealed, arguing the confession was\ninvoluntary and that the circumstantial evidence did not exclude every\nreasonable hypothesis consistent with innocence.",
+        "relevance": 0.4046,
+        "source": "precedent"
+      },
+      {
+        "statute_id": "2064192fdff89c3dea1219ed",
+        "text": "judgments silva v ag [Reasoning]\nReasoning:\nThe Court reiterated that a confession must be voluntary to be admissible\nunder the Evidence Ordinance. Circumstantial evidence may found a\nconviction only where it is consistent with guilt and inconsistent with any\nreasonable hypothesis of innocence. The prosecution bears the burden\nthroughout.",
+        "relevance": 0.3786,
+        "source": "precedent"
+      }
+    ],
+    "citation_checks": []
+  }
+}

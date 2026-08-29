@@ -1,0 +1,111 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400">
+  <rect width="400" height="400" fill="#2c3e50"/>
+  
+  <!-- Background - courtroom wall -->
+  <rect x="0" y="0" width="400" height="280" fill="#34495e"/>
+  
+  <!-- Window -->
+  <rect x="40" y="40" width="80" height="100" fill="#5d6d7e" rx="5"/>
+  <line x1="80" y1="40" x2="80" y2="140" stroke="#2c3e50" stroke-width="2"/>
+  <line x1="40" y1="90" x2="120" y2="90" stroke="#2c3e50" stroke-width="2"/>
+  
+  <!-- American flag (simplified) -->
+  <rect x="320" y="50" width="60" height="40" fill="#c0392b"/>
+  <rect x="320" y="50" width="60" height="6" fill="#ecf0f1"/>
+  <rect x="320" y="62" width="60" height="6" fill="#ecf0f1"/>
+  <rect x="320" y="74" width="60" height="6" fill="#ecf0f1"/>
+  <rect x="320" y="50" width="25" height="20" fill="#2c3e50"/>
+  
+  <!-- Bench/Desk -->
+  <rect x="30" y="250" width="340" height="120" fill="#8b4513"/>
+  <rect x="30" y="250" width="340" height="15" fill="#a0522d"/>
+  <rect x="30" y="360" width="340" height="15" fill="#6b3410"/>
+  
+  <!-- Judge figure -->
+  <!-- Robe body -->
+  <path d="M 150 250 L 130 380 L 270 380 L 250 250 Z" fill="#1a1a2e"/>
+  <path d="M 150 250 L 140 320 L 260 320 L 250 250 Z" fill="#0f0f1e"/>
+  
+  <!-- Neck/Collar -->
+  <rect x="180" y="200" width="40" height="20" fill="#f4c89a"/>
+  <path d="M 165 215 L 200 240 L 235 215 L 235 230 L 200 255 L 165 230 Z" fill="#ecf0f1"/>
+  
+  <!-- Head -->
+  <ellipse cx="200" cy="180" rx="30" ry="35" fill="#f4c89a"/>
+  
+  <!-- Hair -->
+  <path d="M 170 165 Q 170 140 200 138 Q 230 140 230 165 Q 230 150 200 145 Q 175 150 170 165 Z" fill="#3d2817"/>
+  
+  <!-- Glasses -->
+  <circle cx="190" cy="180" r="8" fill="none" stroke="#2c3e50" stroke-width="2"/>
+  <circle cx="210" cy="180" r="8" fill="none" stroke="#2c3e50" stroke-width="2"/>
+  <line x1="198" y1="180" x2="202" y2="180" stroke="#2c3e50" stroke-width="2"/>
+  
+  <!-- Eyes -->
+  <circle cx="190" cy="180" r="2" fill="#2c3e50"/>
+  <circle cx="210" cy="180" r="2" fill="#2c3e50"/>
+  
+  <!-- Nose and mouth -->
+  <path d="M 200 188 L 198 195 L 202 195 Z" fill="#e0a87a"/>
+  <path d="M 192 200 Q 200 203 208 200" stroke="#8b5a3c" stroke-width="1.5" fill="none"/>
+  
+  <!-- Arms -->
+  <rect x="125" y="250" width="30" height="60" fill="#1a1a2e" rx="5"/>
+  <rect x="245" y="250" width="30" height="60" fill="#1a1a2e" rx="5"/>
+  
+  <!-- Hands -->
+  <ellipse cx="140" cy="310" rx="12" ry="10" fill="#f4c89a"/>
+  <ellipse cx="260" cy="310" rx="12" ry="10" fill="#f4c89a"/>
+  
+  <!-- Law books on bench -->
+  <rect x="50" y="220" width="25" height="35" fill="#8b0000"/>
+  <rect x="50" y="220" width="25" height="5" fill="#a52a2a"/>
+  <line x1="55" y1="232" x2="70" y2="232" stroke="#ecf0f1" stroke-width="0.5"/>
+  <line x1="55" y1="238" x2="70" y2="238" stroke="#ecf0f1" stroke-width="0.5"/>
+  <line x1="55" y1="244" x2="70" y2="244" stroke="#ecf0f1" stroke-width="0.5"/>
+  <text x="62" y="252" font-family="serif" font-size="4" fill="#ecf0f1">LAW</text>
+  
+  <rect x="77" y="215" width="25" height="40" fill="#1f4e79"/>
+  <rect x="77" y="215" width="25" height="5" fill="#2e5e89"/>
+  <line x1="82" y1="228" x2="97" y2="228" stroke="#ecf0f1" stroke-width="0.5"/>
+  <line x1="82" y1="235" x2="97" y2="235" stroke="#ecf0f1" stroke-width="0.5"/>
+  <text x="89" y="248" font-family="serif" font-size="4" fill="#ecf0f1">CODE</text>
+  
+  <rect x="104" y="225" width="20" height="30" fill="#2d5016"/>
+  <rect x="104" y="225" width="20" height="4" fill="#3d6026"/>
+  
+  <!-- Open book in front -->
+  <path d="M 160 240 L 200 235 L 240 240 L 240 255 L 200 250 L 160 255 Z" fill="#ecf0f1" stroke="#34495e" stroke-width="1"/>
+  <line x1="200" y1="235" x2="200" y2="250" stroke="#34495e" stroke-width="1"/>
+  <line x1="170" y1="243" x2="195" y2="241" stroke="#7f8c8d" stroke-width="0.5"/>
+  <line x1="170" y1="247" x2="195" y2="245" stroke="#7f8c8d" stroke-width="0.5"/>
+  <line x1="205" y1="241" x2="230" y2="243" stroke="#7f8c8d" stroke-width="0.5"/>
+  <line x1="205" y1="245" x2="230" y2="247" stroke="#7f8c8d" stroke-width="0.5"/>
+  
+  <!-- Statute book right side -->
+  <rect x="290" y="210" width="30" height="45" fill="#5d3a1a"/>
+  <rect x="290" y="210" width="30" height="6" fill="#7d5a3a"/>
+  <text x="297" y="235" font-family="serif" font-size="5" fill="#ecf0f1">STATUTES</text>
+  <line x1="295" y1="242" x2="315" y2="242" stroke="#ecf0f1" stroke-width="0.5"/>
+  <line x1="295" y1="248" x2="315" y2="248" stroke="#ecf0f1" stroke-width="0.5"/>
+  
+  <!-- Gavel -->
+  <rect x="325" y="240" width="40" height="12" fill="#8b4513" rx="2" transform="rotate(-20 345 246)"/>
+  <rect x="318" y="232" width="18" height="22" fill="#6b3410" rx="2" transform="rotate(-20 327 243)"/>
+  
+  <!-- Nameplate -->
+  <rect x="160" y="335" width="80" height="20" fill="#daa520" stroke="#b8860b" stroke-width="1" rx="2"/>
+  <text x="200" y="349" font-family="serif" font-size="9" fill="#1a1a2e" text-anchor="middle" font-weight="bold">JUDGE</text>
+  
+  <!-- Scale of justice (small, decorative) -->
+  <g transform="translate(340, 130)">
+    <line x1="0" y1="0" x2="0" y2="40" stroke="#daa520" stroke-width="2"/>
+    <line x1="-20" y1="5" x2="20" y2="5" stroke="#daa520" stroke-width="2"/>
+    <line x1="-20" y1="5" x2="-25" y2="25" stroke="#daa520" stroke-width="1.5"/>
+    <line x1="-20" y1="5" x2="-15" y2="25" stroke="#daa520" stroke-width="1.5"/>
+    <line x1="20" y1="5" x2="15" y2="25" stroke="#daa520" stroke-width="1.5"/>
+    <line x1="20" y1="5" x2="25" y2="25" stroke="#daa520" stroke-width="1.5"/>
+    <path d="M -25 25 Q -20 30 -15 25" stroke="#daa520" stroke-width="1" fill="none"/>
+    <path d="M 15 25 Q 20 30 25 25" stroke="#daa520" stroke-width="1" fill="none"/>
+  </g>
+</svg>

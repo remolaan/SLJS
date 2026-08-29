@@ -1,0 +1,64 @@
+type: statute
+title: Penal Code (Ordinance No. 2 of 1883, as amended)
+
+s.294: Culpable homicide. Whoever causes death by doing an act with the
+intention of causing death, or with the intention of causing such bodily
+injury as is likely to cause death, commits the offence of culpable homicide.
+
+s.296: Culpable homicide amounting to murder. Culpable homicide is murder
+where the act is done with the intention of causing death, or with the
+intention of causing such bodily injury as the offender knows to be likely
+to cause the death of the person to whom the harm is caused.
+
+s.297: Culpable homicide not amounting to murder. Culpable homicide is not
+murder when it is committed without premeditation in a sudden fight, or
+when the offender is deprived of the power of self-control by grave and
+sudden provocation, or when the act is committed in the exercise of the
+right of private defence of person or property exceeding the power given
+by law.
+
+s.314: Hurt. Whoever causes bodily pain, disease or infirmity to any person
+is said to cause hurt.
+
+s.322: Grievous hurt. Hurt is grievous when it causes permanent loss of
+sight or hearing, permanent disfigurement, fracture or dislocation of a
+bone, or any hurt which endangers life or causes the sufferer to be
+during the space of twenty days in severe bodily pain or unable to follow
+his ordinary pursuits.
+
+s.324: Voluntarily causing grievous hurt. Whoever voluntarily causes
+grievous hurt shall be punished with imprisonment of either description
+for a term which may extend to seven years and shall also be liable to
+fine.
+
+s.326: Assault. Whoever makes any gesture, or prepares anything, intending
+that the gesture or thing shall be used against the person of another, or
+knowing it to be likely that it will be so used, commits an assault.
+
+s.327: Criminal force. Whoever intentionally uses force to any person,
+without that person's consent, in order to the committing of any offence,
+or intending by the use of such force to cause injury, fear or annoyance,
+commits the offence of using criminal force.
+
+s.328: Assault or criminal force otherwise than on grave provocation.
+Whoever assaults or uses criminal force to any person otherwise than on
+grave and sudden provocation commits a simple offence punishable as
+prescribed.
+
+s.363: Rape. A man is said to commit rape who has sexual intercourse with
+a woman against her will, without her consent, or with her consent obtained
+by fear of death or hurt, or when her consent is obtained by a misconception
+of fact.
+
+s.367: Theft. Whoever, intending to take dishonestly any movable property
+out of the possession of any person without that person's consent, moves
+that property in order to such taking, is said to commit theft.
+
+s.380: Robbery. In all robbery there is either theft or extortion. Theft is
+robbery if, in order to the committing of the theft, or in committing it,
+or in carrying away or attempting to carry away property obtained by the
+theft, the offender voluntarily causes or attempts to cause to any person
+death or hurt or wrongful restraint.
+
+s.431: House-trespass by night. Whoever commits house-trespass after sunset
+and before sunrise is said to commit house-trespass by night.

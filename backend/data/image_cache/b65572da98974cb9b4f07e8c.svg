@@ -1,0 +1,142 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 500" width="400" height="500">
+  <defs>
+    <radialGradient id="bgGlow" cx="50%" cy="40%" r="60%">
+      <stop offset="0%" stop-color="#3d2f1f"/>
+      <stop offset="100%" stop-color="#1a1108"/>
+    </radialGradient>
+    <linearGradient id="robe" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1a1a1a"/>
+      <stop offset="100%" stop-color="#0a0a0a"/>
+    </linearGradient>
+    <linearGradient id="bench" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#6b4423"/>
+      <stop offset="100%" stop-color="#3e2710"/>
+    </linearGradient>
+    <linearGradient id="skin" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#8b5a3c"/>
+      <stop offset="100%" stop-color="#6b4226"/>
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="400" height="500" fill="url(#bgGlow)"/>
+  
+  <!-- Warm light spot -->
+  <ellipse cx="200" cy="180" rx="150" ry="120" fill="#d4a574" opacity="0.15"/>
+  
+  <!-- Wooden bench back panel -->
+  <rect x="20" y="280" width="360" height="180" fill="url(#bench)"/>
+  <rect x="20" y="280" width="360" height="15" fill="#8b5a2b"/>
+  <rect x="20" y="290" width="360" height="3" fill="#2a1808"/>
+  
+  <!-- Bench carved details -->
+  <rect x="40" y="300" width="320" height="2" fill="#2a1808" opacity="0.5"/>
+  <rect x="40" y="380" width="320" height="2" fill="#2a1808" opacity="0.5"/>
+  
+  <!-- Decorative carved panel -->
+  <rect x="60" y="310" width="280" height="60" fill="none" stroke="#2a1808" stroke-width="2" opacity="0.6"/>
+  <circle cx="200" cy="340" r="15" fill="none" stroke="#2a1808" stroke-width="2" opacity="0.6"/>
+  <path d="M 180 340 L 220 340 M 200 320 L 200 360" stroke="#2a1808" stroke-width="1.5" opacity="0.6"/>
+  
+  <!-- Robe - body -->
+  <path d="M 80 500 L 80 320 Q 80 280 120 270 L 160 260 L 240 260 L 280 270 Q 320 280 320 320 L 320 500 Z" fill="url(#robe)"/>
+  
+  <!-- Robe shoulders detail -->
+  <path d="M 120 280 Q 130 265 160 260 L 240 260 Q 270 265 280 280 L 270 295 L 130 295 Z" fill="#0d0d0d"/>
+  
+  <!-- White neck band (jabot/band) -->
+  <path d="M 165 250 L 165 290 L 200 305 L 235 290 L 235 250 L 220 245 L 200 248 L 180 245 Z" fill="#f5f5f0"/>
+  <path d="M 175 250 L 175 285 L 200 298 L 200 250 Z" fill="#e8e8e0"/>
+  <path d="M 225 250 L 225 285 L 200 298 L 200 250 Z" fill="#ffffff"/>
+  <path d="M 165 250 L 180 245 L 200 248 L 220 245 L 235 250" fill="none" stroke="#d0d0c8" stroke-width="1"/>
+  
+  <!-- Neck -->
+  <path d="M 180 220 L 180 250 L 220 250 L 220 220 Z" fill="url(#skin)"/>
+  <path d="M 180 220 Q 200 235 220 220" fill="#5a3520" opacity="0.4"/>
+  
+  <!-- Head/face -->
+  <ellipse cx="200" cy="160" rx="55" ry="65" fill="url(#skin)"/>
+  
+  <!-- Face shadow -->
+  <ellipse cx="200" cy="170" rx="55" ry="55" fill="#7a4a2c" opacity="0.3"/>
+  
+  <!-- Hair - gray/silver for dignified look -->
+  <path d="M 145 140 Q 145 100 175 90 Q 200 82 225 90 Q 255 100 255 140 Q 255 125 245 118 Q 230 105 200 103 Q 170 105 155 118 Q 145 125 145 140 Z" fill="#3a3530"/>
+  <path d="M 148 135 Q 155 110 175 100 Q 200 92 225 100 Q 245 110 252 135 Q 248 115 230 108 Q 215 102 200 102 Q 185 102 170 108 Q 152 115 148 135 Z" fill="#2a2520"/>
+  
+  <!-- Side hair -->
+  <path d="M 145 140 L 148 180 L 155 185 L 153 145 Z" fill="#2a2520"/>
+  <path d="M 255 140 L 252 180 L 245 185 L 247 145 Z" fill="#2a2520"/>
+  
+  <!-- Eyebrows -->
+  <path d="M 170 150 Q 180 146 190 150" stroke="#1a1a1a" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+  <path d="M 210 150 Q 220 146 230 150" stroke="#1a1a1a" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+  
+  <!-- Eyes -->
+  <ellipse cx="180" cy="165" rx="5" ry="3" fill="#1a1a1a"/>
+  <ellipse cx="220" cy="165" rx="5" ry="3" fill="#1a1a1a"/>
+  <ellipse cx="181" cy="164" rx="1.5" ry="1" fill="#ffffff"/>
+  <ellipse cx="221" cy="164" rx="1.5" ry="1" fill="#ffffff"/>
+  
+  <!-- Nose -->
+  <path d="M 200 170 L 196 190 Q 195 195 200 196 Q 205 195 204 190 Z" fill="#6b4023" opacity="0.4"/>
+  <path d="M 200 170 L 198 188" stroke="#5a3520" stroke-width="0.5" fill="none" opacity="0.5"/>
+  
+  <!-- Mouth - dignified subtle smile -->
+  <path d="M 188 210 Q 200 215 212 210" stroke="#3a2010" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+  <path d="M 188 210 Q 200 212 212 210" fill="#5a3020" opacity="0.5"/>
+  
+  <!-- Wrinkles for dignity -->
+  <path d="M 175 180 Q 180 183 185 180" stroke="#5a3520" stroke-width="0.5" fill="none" opacity="0.4"/>
+  <path d="M 215 180 Q 220 183 225 180" stroke="#5a3520" stroke-width="0.5" fill="none" opacity="0.4"/>
+  <path d="M 190 195 L 210 195" stroke="#5a3520" stroke-width="0.4" fill="none" opacity="0.3"/>
+  
+  <!-- Ears -->
+  <ellipse cx="147" cy="170" rx="6" ry="12" fill="url(#skin)"/>
+  <ellipse cx="253" cy="170" rx="6" ry="12" fill="url(#skin)"/>
+  <path d="M 145 170 Q 148 170 149 175" stroke="#5a3520" stroke-width="0.8" fill="none"/>
+  <path d="M 255 170 Q 252 170 251 175" stroke="#5a3520" stroke-width="0.8" fill="none"/>
+  
+  <!-- Glasses -->
+  <circle cx="180" cy="165" r="14" fill="none" stroke="#2a1a0a" stroke-width="2"/>
+  <circle cx="220" cy="165" r="14" fill="none" stroke="#2a1a0a" stroke-width="2"/>
+  <path d="M 194 165 L 206 165" stroke="#2a1a0a" stroke-width="2"/>
+  <path d="M 166 162 L 158 158" stroke="#2a1a0a" stroke-width="1.5"/>
+  <path d="M 234 162 L 242 158" stroke="#2a1a0a" stroke-width="1.5"/>
+  
+  <!-- Lens reflection -->
+  <ellipse cx="175" cy="160" rx="3" ry="2" fill="#ffffff" opacity="0.2"/>
+  <ellipse cx="215" cy="160" rx="3" ry="2" fill="#ffffff" opacity="0.2"/>
+  
+  <!-- Robe collar V -->
+  <path d="M 150 270 L 200 320 L 250 270 L 245 275 L 200 318 L 155 275 Z" fill="#050505"/>
+  
+  <!-- Robe folds/shadows -->
+  <path d="M 100 350 L 110 500" stroke="#000000" stroke-width="2" opacity="0.4"/>
+  <path d="M 300 350 L 290 500" stroke="#000000" stroke-width="2" opacity="0.4"/>
+  <path d="M 130 320 L 140 500" stroke="#1a1a1a" stroke-width="1" opacity="0.3"/>
+  <path d="M 270 320 L 260 500" stroke="#1a1a1a" stroke-width="1" opacity="0.3"/>
+  
+  <!-- Pocket detail (judicial) -->
+  <rect x="135" y="340" width="20" height="3" fill="#0a0a0a" opacity="0.6"/>
+  
+  <!-- Warm light highlight on face -->
+  <ellipse cx="200" cy="140" rx="40" ry="20" fill="#f4d4a0" opacity="0.2"/>
+  
+  <!-- Subtle smile lines -->
+  <path d="M 175 215 Q 180 218 185 215" stroke="#4a2510" stroke-width="0.5" fill="none" opacity="0.5"/>
+  <path d="M 215 215 Q 220 218 225 215" stroke="#4a2510" stroke-width="0.5" fill="none" opacity="0.5"/>
+  
+  <!-- Book on bench hint -->
+  <rect x="40" y="350" width="60" height="40" fill="#5a2010" stroke="#2a1005" stroke-width="1"/>
+  <rect x="40" y="350" width="60" height="5" fill="#3a1505"/>
+  <line x1="70" y1="360" x2="70" y2="385" stroke="#2a1005" stroke-width="0.5"/>
+  
+  <!-- Decorative element on bench -->
+  <circle cx="340" cy="370" r="15" fill="#8b6f3f" opacity="0.6"/>
+  <circle cx="340" cy="370" r="10" fill="none" stroke="#5a4020" stroke-width="1.5"/>
+  
+  <!-- Subtle frame border -->
+  <rect x="5" y="5" width="390" height="490" fill="none" stroke="#8b6f3f" stroke-width="2" opacity="0.4"/>
+  <rect x="10" y="10" width="380" height="480" fill="none" stroke="#5a4020" stroke-width="1" opacity="0.3"/>
+</svg>

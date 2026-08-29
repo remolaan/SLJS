@@ -1,0 +1,25 @@
+type: precedent
+case: King v Perera (Hypothetical, illustrative) [2024] SLHC 0123
+
+Facts:
+The accused was charged with voluntarily causing grievous hurt contrary to
+section 324 of the Penal Code following an altercation in a marketplace.
+The victim suffered a fracture of the arm. The accused claimed the injury
+resulted from a sudden quarrel and that he acted without premeditation and
+in the heat of the moment.
+
+Issues:
+Whether the injury amounted to grievous hurt within section 322; whether
+the sudden quarrel negated the intent required for the aggravated offence.
+
+Reasoning:
+The Court held that a fracture of a bone constitutes grievous hurt under
+section 322. However, where the harm is inflicted in the course of a sudden
+fight without premeditation, the case may fall within the mitigating
+framework, and the court may temper the sentence accordingly. The burden
+remains on the prosecution to establish the elements of the offence beyond
+reasonable doubt.
+
+Held:
+Conviction under section 324 sustained, but the custodial sentence was
+reduced in light of provocation and the absence of premeditation.

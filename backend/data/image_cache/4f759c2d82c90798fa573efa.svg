@@ -1,0 +1,108 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" width="400" height="300">
+  <!-- Background - courtroom wall -->
+  <rect width="400" height="300" fill="#d4c5a0"/>
+  
+  <!-- Wood paneling on lower wall -->
+  <rect x="0" y="180" width="400" height="120" fill="#8b6f47"/>
+  <line x1="0" y1="180" x2="400" y2="180" stroke="#5c4630" stroke-width="2"/>
+  
+  <!-- Witness box - wooden enclosure -->
+  <rect x="60" y="100" width="180" height="160" fill="none" stroke="#5c4630" stroke-width="4"/>
+  
+  <!-- Witness box side panel (left) -->
+  <rect x="60" y="100" width="8" height="160" fill="#6b5235"/>
+  
+  <!-- Witness box front railing -->
+  <rect x="68" y="160" width="172" height="6" fill="#6b5235"/>
+  <rect x="68" y="170" width="172" height="4" fill="#6b5235"/>
+  
+  <!-- Witness stand base -->
+  <rect x="100" y="240" width="100" height="20" fill="#6b5235"/>
+  
+  <!-- Witness figure - body -->
+  <ellipse cx="150" cy="150" rx="35" ry="50" fill="#3a5a7a"/>
+  
+  <!-- Suit jacket detail -->
+  <path d="M 120 175 L 130 210 L 170 210 L 180 175" fill="#2a3f5a"/>
+  <line x1="150" y1="170" x2="150" y2="210" stroke="#1a2a3a" stroke-width="2"/>
+  
+  <!-- Shirt collar -->
+  <path d="M 138 150 L 150 165 L 162 150 L 158 145 L 150 152 L 142 145 Z" fill="#f5f5f0"/>
+  
+  <!-- Tie -->
+  <polygon points="150,152 146,175 154,175" fill="#8b1a1a"/>
+  
+  <!-- Neck -->
+  <rect x="143" y="110" width="14" height="15" fill="#e8b896"/>
+  
+  <!-- Head -->
+  <ellipse cx="150" cy="95" rx="22" ry="26" fill="#e8b896"/>
+  
+  <!-- Hair -->
+  <path d="M 128 85 Q 128 70 150 68 Q 172 70 172 85 Q 172 78 165 75 Q 150 72 135 75 Q 128 78 128 85" fill="#4a3020"/>
+  
+  <!-- Eyes -->
+  <ellipse cx="142" cy="95" rx="2" ry="2.5" fill="#2a2018"/>
+  <ellipse cx="158" cy="95" rx="2" ry="2.5" fill="#2a2018"/>
+  
+  <!-- Eyebrows -->
+  <line x1="138" y1="89" x2="146" y2="89" stroke="#4a3020" stroke-width="1.5"/>
+  <line x1="154" y1="89" x2="162" y2="89" stroke="#4a3020" stroke-width="1.5"/>
+  
+  <!-- Nose -->
+  <path d="M 150 98 L 148 105 L 152 105 Z" fill="#d4a586"/>
+  
+  <!-- Mouth (speaking) -->
+  <ellipse cx="150" cy="110" rx="4" ry="2.5" fill="#8b3a3a"/>
+  
+  <!-- Raised right hand (swearing in gesture) -->
+  <ellipse cx="195" cy="115" rx="10" ry="14" fill="#e8b896"/>
+  <rect x="192" y="120" width="6" height="25" fill="#3a5a7a"/>
+  <!-- Hand fingers -->
+  <line x1="189" y1="110" x2="187" y2="105" stroke="#d4a586" stroke-width="2" stroke-linecap="round"/>
+  <line x1="192" y1="108" x2="191" y2="102" stroke="#d4a586" stroke-width="2" stroke-linecap="round"/>
+  <line x1="195" y1="107" x2="195" y2="100" stroke="#d4a586" stroke-width="2" stroke-linecap="round"/>
+  <line x1="198" y1="108" x2="199" y2="102" stroke="#d4a586" stroke-width="2" stroke-linecap="round"/>
+  <line x1="201" y1="110" x2="203" y2="105" stroke="#d4a586" stroke-width="2" stroke-linecap="round"/>
+  
+  <!-- Microphone -->
+  <rect x="170" y="200" width="3" height="30" fill="#2a2a2a"/>
+  <ellipse cx="171" cy="198" rx="6" ry="8" fill="#1a1a1a"/>
+  <ellipse cx="171" cy="196" rx="4" ry="5" fill="#3a3a3a"/>
+  
+  <!-- Judge's bench in background (right side) -->
+  <rect x="280" y="120" width="110" height="80" fill="#7a5a3a"/>
+  <rect x="280" y="115" width="110" height="8" fill="#5c3f25"/>
+  
+  <!-- Judge figure (partial view) -->
+  <!-- Robe -->
+  <path d="M 305 120 L 305 200 L 365 200 L 365 120 Z" fill="#1a1a3a"/>
+  <!-- Robe collar -->
+  <path d="M 320 120 L 335 140 L 350 120" fill="#ffffff"/>
+  <!-- Judge head -->
+  <ellipse cx="335" cy="95" rx="18" ry="22" fill="#e8b896"/>
+  <!-- Judge hair (gray) -->
+  <path d="M 318 90 Q 318 75 335 73 Q 352 75 352 90 Q 350 82 335 80 Q 320 82 318 90" fill="#7a7a7a"/>
+  <!-- Judge eyes -->
+  <ellipse cx="329" cy="95" rx="1.5" ry="2" fill="#2a2018"/>
+  <ellipse cx="341" cy="95" rx="1.5" ry="2" fill="#2a2018"/>
+  <!-- Judge mouth -->
+  <line x1="332" y1="108" x2="338" y2="108" stroke="#8b3a3a" stroke-width="1.5"/>
+  
+  <!-- Gavel on judge bench -->
+  <rect x="355" y="110" width="20" height="5" fill="#5c3f25" transform="rotate(-15 365 112)"/>
+  <rect x="370" y="105" width="8" height="10" fill="#5c3f25" transform="rotate(-15 374 110)"/>
+  
+  <!-- Scales of justice (small decoration on wall) -->
+  <g transform="translate(220, 50)">
+    <rect x="14" y="0" width="2" height="25" fill="#5c4630"/>
+    <line x1="5" y1="10" x2="25" y2="10" stroke="#5c4630" stroke-width="1.5"/>
+    <path d="M 0 10 L 0 20 L 10 20 L 5 10" fill="none" stroke="#5c4630" stroke-width="1.5"/>
+    <path d="M 20 10 L 25 20 L 35 20 L 30 10" fill="none" stroke="#5c4630" stroke-width="1.5"/>
+    <circle cx="15" cy="3" r="2" fill="#c9a961"/>
+  </g>
+  
+  <!-- Sound waves from mouth -->
+  <path d="M 160 108 Q 175 105 185 110" fill="none" stroke="#5a5a5a" stroke-width="1" opacity="0.6"/>
+  <path d="M 162 113 Q 178 110 190 116" fill="none" stroke="#5a5a5a" stroke-width="1" opacity="0.4"/>
+</svg>

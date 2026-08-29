@@ -1,0 +1,25 @@
+type: precedent
+case: Silva v Attorney-General (Hypothetical, illustrative) [2021] SLCA 0456
+
+Facts:
+The accused was convicted of theft of movable property contrary to section
+367 of the Penal Code. At trial the prosecution relied on circumstantial
+evidence and a confession. The accused appealed, arguing the confession was
+involuntary and that the circumstantial evidence did not exclude every
+reasonable hypothesis consistent with innocence.
+
+Issues:
+Whether the confession was admissible and voluntary; whether circumstantial
+evidence sufficed to prove the dishonest taking beyond reasonable doubt.
+
+Reasoning:
+The Court reiterated that a confession must be voluntary to be admissible
+under the Evidence Ordinance. Circumstantial evidence may found a
+conviction only where it is consistent with guilt and inconsistent with any
+reasonable hypothesis of innocence. The prosecution bears the burden
+throughout.
+
+Held:
+Appeal allowed; conviction and sentence set aside on the ground that the
+confession was not shown to be voluntary and the remaining evidence did not
+exclude reasonable doubt.

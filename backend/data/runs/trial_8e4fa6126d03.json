@@ -1,0 +1,84 @@
+{
+  "run_id": "8e4fa6126d03",
+  "saved_at": 1787994757.2546463,
+  "data": {
+    "trial_id": "8e4fa6126d03",
+    "status": "running",
+    "current_node": "intake",
+    "stage_label": "Case Intake",
+    "steps_done": [
+      "intake"
+    ],
+    "steps_remaining": [
+      "prosecution_opening",
+      "defense_opening",
+      "prosecution_evidence",
+      "witness",
+      "defense_evidence",
+      "prosecution_closing",
+      "defense_closing",
+      "retrieve",
+      "judge",
+      "finalize"
+    ],
+    "transcript": [
+      {
+        "role": "intake",
+        "speaker": "Case Intake",
+        "label": "Case Intake",
+        "content": "Mapped offences: ['Penal Code, s.324 - voluntarily causing grievous hurt']\nNotes: STUB: structured intake output."
+      }
+    ],
+    "case": {
+      "title": "The Market Altercation (Hypothetical)",
+      "court_tier": "High Court",
+      "proceeding": "criminal",
+      "jurisdiction": "Sri Lanka",
+      "parties": [
+        {
+          "name": "A. Bandara (pseudonym)",
+          "role": "accused",
+          "pseudonym": true
+        },
+        {
+          "name": "K. Nadeesha (pseudonym)",
+          "role": "victim",
+          "pseudonym": true
+        }
+      ],
+      "charges": [
+        {
+          "description": "voluntarily causing grievous hurt",
+          "statute": "Penal Code",
+          "section": "324",
+          "max_penalty": "imprisonment up to 7 years and fine"
+        }
+      ],
+      "facts": "On a market day, a dispute arose between two vendors over a stall boundary. The argument escalated and the accused struck the victim with a wooden crate, fracturing the victim's arm. The accused claims the blow was struck in the heat of a sudden quarrel and without prior planning. The victim was treated at a hospital and discharged after ten days.",
+      "evidence": [
+        {
+          "type": "witness",
+          "description": "Two bystanders who saw the altercation begin and escalate.",
+          "relevance": "corroborates sudden quarrel / provocation",
+          "admitted": null
+        },
+        {
+          "type": "documentary",
+          "description": "Hospital admission record documenting the arm fracture.",
+          "relevance": "establishes grievous hurt under s.322",
+          "admitted": null
+        },
+        {
+          "type": "physical",
+          "description": "The wooden crate recovered at the scene.",
+          "relevance": "corroborates the manner of injury",
+          "admitted": null
+        }
+      ],
+      "burden_of_proof": "beyond reasonable doubt"
+    },
+    "judgment": null,
+    "retrieved_context": [],
+    "citation_checks": []
+  }
+}

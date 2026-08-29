@@ -1,0 +1,22 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+*.egg-info/
+
+# Env / secrets
+.env
+
+# Data / models
+backend/data/vectorstore/
+*.onnx
+.chroma/
+
+# Node / frontend
+node_modules/
+dist/
+build/
+
+# Misc
+.DS_Store
+*.log

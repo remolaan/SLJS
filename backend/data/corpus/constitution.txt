@@ -1,0 +1,18 @@
+type: constitution
+title: Constitution of Sri Lanka
+
+Article 12: All persons are equal before the law and are entitled to the
+equal protection of the law. No citizen shall be discriminated against on
+the grounds of race, religion, language, caste, sex, political opinion,
+place of birth or any one of such grounds.
+
+Article 13: No person shall be arrested except according to procedure
+established by law. Every person charged with an offence has the right to
+be released on bail, subject to such conditions as may be prescribed by
+law, unless there are reasonable grounds for believing that he or she will
+not appear in accordance with such conditions. No person shall be deprived
+of life, liberty or security of person except according to procedure
+established by law.
+
+Article 14: Every citizen is entitled to the freedom of speech and
+expression, peaceful assembly, and freedom of movement.
