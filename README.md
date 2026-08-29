@@ -38,6 +38,11 @@ Case Intake Agent ──▶ Prosecution ──▶ Defense ──▶ Witness (opt
 - **API:** FastAPI (`app/api/`)
 - **Frontend:** React + Vite courtroom UI (`frontend/`)
 
+> **Backend docs:** `docs/backend_workflow.md` (Mermaid graphs of the state machine,
+> scenario routing, bench deliberation, RAG, verdict model, session loop).
+> `docs/architecture.md` (detailed write-up). `docs/legal_model.md` (Sri Lankan
+> corrections).
+
 ## Sri Lankan legal model
 
 The simulation follows the real structure of the Sri Lankan courts, not a

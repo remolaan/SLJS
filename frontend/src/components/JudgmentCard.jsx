@@ -2,8 +2,7 @@ import React from 'react'
 
 function verdictStyle(v) {
   if (v === 'guilty' || v === 'liable') return { cls: 'guilty', label: 'GUILTY / LIABLE' }
-  if (v === 'not_guilty' || v === 'not_liable') return { cls: 'notguilty', label: 'NOT GUILTY' }
-  return { cls: 'insufficient', label: 'INSUFFICIENT EVIDENCE' }
+  return { cls: 'notguilty', label: 'NOT GUILTY' }
 }
 
 export default function JudgmentCard({ judgment, sources = [], checks = [] }) {
@@ -23,7 +22,12 @@ export default function JudgmentCard({ judgment, sources = [], checks = [] }) {
         <div className="verdict-word">{vs.label}</div>
         <div className="verdict-confidence">
           Confidence: {Math.round(judgment.verdict_confidence * 100)}%
-          {judgment.insufficient_evidence && <span className="ie-note"> — the record did not meet the burden of proof</span>}
+          {judgment.evidentiary_directive === 'produce_more' && (
+            <span className="ie-note"> — record insufficient; court directs further evidence be produced</span>
+          )}
+          {judgment.evidentiary_directive === 'acquit' && (
+            <span className="ie-note"> — record insufficient; accused acquitted</span>
+          )}
         </div>
       </div>
 

@@ -346,7 +346,7 @@ function TypingBubble({ role }) {
 // the moment the judge delivers a verdict — instead of only in a separate tab.
 function VerdictBubble({ judgment, onView }) {
   const v = judgment.verdict
-  const cls = v === 'guilty' || v === 'liable' ? 'guilty' : (v === 'not_guilty' || v === 'not_liable' ? 'notguilty' : 'insufficient')
+  const cls = v === 'guilty' || v === 'liable' ? 'guilty' : 'notguilty'
   const label = cls === 'guilty' ? 'GUILTY' : cls === 'notguilty' ? 'NOT GUILTY' : 'INSUFFICIENT EVIDENCE'
   return (
     <div className="verdict-bubble-wrap">

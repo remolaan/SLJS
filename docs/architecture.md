@@ -113,17 +113,26 @@ Each node instantiates an agent with its own system prompt and runs one LLM call
 | `JudgeAgent` | Judge — weighs both sides, applies burden of proof, returns structured JSON | `Judgment` (parsed) |
 | `ExaminerAgent` | interactive Q&A (judge/counsel ask witness or counsel) | prose |
 
-The Judge agent is instructed **not to force a verdict**: if the record is insufficient it returns
-`verdict: "insufficient_evidence"` rather than inventing a finding. It returns strict JSON:
+The Judge agent is instructed **not to force a verdict** and verdicts are **binary**
+(`guilty`/`not_guilty`, or `liable`/`not_liable` in civil). There is no
+`insufficient_evidence` verdict. If the record does not establish the elements to the
+applicable burden of proof, the judge instead sets `verdict: "not_guilty"` and an
+**`evidentiary_directive`**:
+
+- `produce_more` — the prosecution/plaintiff could still remedy the gap; the court directs
+  that further evidence be produced (`release: false`).
+- `acquit` — the case should simply end; the accused is acquitted (`release: true`).
+
+It returns strict JSON:
 
 ```json
 {
   "facts_found": "...",
   "legal_reasoning": "...",
   "citations": ["..."],
-  "verdict": "guilty|not_guilty|liable|not_liable|insufficient_evidence",
+  "verdict": "guilty|not_guilty|liable|not_liable",
   "verdict_confidence": 0.0,
-  "insufficient_evidence": false,
+  "evidentiary_directive": "" | "produce_more" | "acquit",
   "sentence": { "custodial": false, "term_years": null, ... },
   "release": false,
   "dissent_notes": "..."

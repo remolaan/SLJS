@@ -128,16 +128,16 @@ HISTORICAL_DATASET = [
     ),
     _grievous_hurt(
         include_witness_evidence=False,
-        verdict="insufficient_evidence",
-        note="No witness to the act and the accused disputes it; elements unproven.",
+        verdict="not_guilty",
+        note="No witness to the act and the accused disputes it; not guilty — judge directs further evidence or acquits.",
     ),
     _theft_no_eyewitness(
-        verdict="insufficient_evidence",
-        note="Only recent possession; no proof of dishonest taking/entry beyond reasonable doubt.",
+        verdict="not_guilty",
+        note="Only recent possession; not guilty — no proof of dishonest taking/entry beyond reasonable doubt.",
     ),
     _fraud_no_documentation(
-        verdict="insufficient_evidence",
-        note="Bare receipt and uncorroborated account do not prove misrepresentation.",
+        verdict="not_guilty",
+        note="Bare receipt and uncorroborated account; not guilty — insufficient to prove misrepresentation.",
     ),
     _grievous_hurt_strong_case(
         verdict="guilty",

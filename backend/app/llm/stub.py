@@ -56,7 +56,7 @@ _JUDGE_JSON = (
     'premeditation in a sudden quarrel weighs in mitigation.", '
     '"citations": ["Penal Code, s.324", "Penal Code, s.322", '
     '"King v Perera [2024] SLHC 0123"], "verdict": "guilty", '
-    '"verdict_confidence": 0.85, "insufficient_evidence": false, '
+    '"verdict_confidence": 0.85, "evidentiary_directive": "", '
     '"sentence": {"custodial": true, "term_years": 2, "term_months": 0, '
     '"fine_lkr": 50000, "conditions": ["good behaviour"], '
     '"note": "STUB sentence for offline demo"}, "release": false, '
@@ -65,11 +65,11 @@ _JUDGE_JSON = (
 
 
 def _judge_json(user: str) -> str:
-    """Heuristic stub judge: returns insufficient_evidence for weak records.
+    """Heuristic stub judge: for weak records returns not_guilty + a directive
+    (produce_more or acquit). Verdicts stay binary — never 'insufficient_evidence'.
 
-    This lets the offline evaluation demo demonstrate the no-verdict
-    behaviour without a live model. A real model makes this determination
-    from the record.
+    This lets the offline evaluation demo demonstrate the directive behaviour
+    without a live model. A real model makes this determination from the record.
     """
     low = user.lower()
     weak_markers = [
@@ -88,10 +88,11 @@ def _judge_json(user: str) -> str:
             'the charge to the applicable burden of proof.", '
             '"legal_reasoning": "STUB: Essential elements are unproven - the '
             'admitted evidence does not cover the act or the required intent. '
-            'The court therefore declines to convict and returns a verdict of '
-            'insufficient evidence.", "citations": ["Penal Code, s.367"], '
-            '"verdict": "insufficient_evidence", "verdict_confidence": 0.3, '
-            '"insufficient_evidence": true, "sentence": null, "release": true, '
-            '"dissent_notes": "STUB offline demo - insufficient evidence"}'
+            'The court directs the prosecution to produce further evidence or '
+            'the accused is acquitted.", "citations": ["Penal Code, s.367"], '
+            '"verdict": "not_guilty", "verdict_confidence": 0.3, '
+            '"evidentiary_directive": "produce_more", "sentence": null, '
+            '"release": false, '
+            '"dissent_notes": "STUB offline demo - not guilty, directive"}'
         )
     return _JUDGE_JSON

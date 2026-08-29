@@ -190,15 +190,22 @@ def _aggregate_bench(judgments) -> Judgment:
     )
 
     first = judgments[0][1]
+    # Aggregate the evidentiary directive: use the most common non-empty one,
+    # else the first judge's.
+    from collections import Counter
+
+    directives = [j.evidentiary_directive for _, j in judgments if j.evidentiary_directive]
+    directive = Counter(directives).most_common(1)[0][0] if directives else first.evidentiary_directive
+    release = bool(Counter(j.release for _, j in judgments).most_common(1)[0][0]) if judgments else first.release
     return Judgment(
         facts_found=first.facts_found,
         legal_reasoning=reasoning,
         citations=first.citations,
         verdict=majority,
         verdict_confidence=round(votes[majority] / len(judgments), 4),
-        insufficient_evidence=majority == "insufficient_evidence",
+        evidentiary_directive=directive,
         sentence=first.sentence,
-        release=first.release,
+        release=release or (directive == "acquit"),
         dissent_notes=dissent_summary,
         bench_verdict=BenchVerdict(
             majority_verdict=majority,
@@ -231,18 +238,21 @@ def _parse_judgment(raw: str) -> Judgment:
                 note=sent.get("note", ""),
             )
         verdict = data.get("verdict", "not_guilty")
+        # Normalise any legacy 'insufficient_evidence' to not_guilty + directive.
+        directive = data.get("evidentiary_directive", "")
+        if verdict == "insufficient_evidence":
+            verdict = "not_guilty"
+            if not directive:
+                directive = "produce_more"
         return Judgment(
             facts_found=data.get("facts_found", ""),
             legal_reasoning=data.get("legal_reasoning", ""),
             citations=data.get("citations", []),
             verdict=verdict,
             verdict_confidence=float(data.get("verdict_confidence", 0.0)),
-            insufficient_evidence=bool(
-                data.get("insufficient_evidence", False)
-                or verdict == "insufficient_evidence"
-            ),
+            evidentiary_directive=directive,
             sentence=sentence,
-            release=bool(data.get("release", False)),
+            release=bool(data.get("release", False)) or (directive == "acquit"),
             dissent_notes=data.get("dissent_notes", ""),
         )
     except (json.JSONDecodeError, ValueError, TypeError):

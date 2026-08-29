@@ -18,7 +18,7 @@ def evaluate_one(
     """Run an AI trial on a historical case and compare with ground truth."""
     result = run_trial(historical.case, settings=settings, include_witness=include_witness)
     judgment = result.judgment
-    predicted = judgment.verdict if judgment else "insufficient_evidence"
+    predicted = judgment.verdict if judgment else "not_guilty"
     correct = predicted == historical.ground_truth_verdict
     cit_summary = summarize(result.citation_checks)
     return EvaluationResult(

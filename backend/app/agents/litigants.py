@@ -277,20 +277,25 @@ class JudgeAgent(Agent):
         "RETRIEVED LAW provided (statute sections and precedent) and cite "
         "them inline. Never cite law that is not in the retrieved context. "
         "This is a research/education simulation, not a real legal opinion.\n"
-        "\nCRITICAL — do not force a verdict: If the record (facts, evidence, "
-        "and testimony) is insufficient to establish the elements of the "
-        "charge to the applicable burden of proof — for example because "
-        "essential evidence is missing, eyewitness evidence is absent, or "
-        "admitted evidence does not cover a required element — you MUST "
-        "decline to convict. Set \"verdict\": \"insufficient_evidence\", "
-        "\"insufficient_evidence\": true, and explain in legal_reasoning what "
-        "element is unproven. Only return a guilty/not_guilty verdict when "
-        "the record genuinely supports a determination.\n"
+        "\nCRITICAL — verdicts are BINARY (guilty/not_guilty, or liable/"
+        "not_liable in civil). You must NEVER return 'insufficient_evidence' "
+        "as a verdict. If the record (facts, evidence, testimony) is "
+        "insufficient to establish the elements to the applicable burden of "
+        "proof:\n"
+        "  - If the prosecution/plaintiff could still remedy the gap, set "
+        "\"verdict\": \"not_guilty\", \"release\": false, and "
+        "\"evidentiary_directive\": \"produce_more\", then state in "
+        "legal_reasoning what element is unproven and what further evidence "
+        "should be produced.\n"
+        "  - If the case should simply end, set \"verdict\": \"not_guilty\", "
+        "\"release\": true, and \"evidentiary_directive\": \"acquit\".\n"
+        "Otherwise return a clear guilty/not_guilty (or liable/not_liable) "
+        "verdict with no directive.\n"
         "Return ONLY valid JSON with keys:\n"
         '{"facts_found": "...", "legal_reasoning": "...", '
         '"citations": ["..."], "verdict": "guilty|not_guilty|liable|'
-        'not_liable|insufficient_evidence", "verdict_confidence": 0.0-1.0, '
-        '"insufficient_evidence": bool, '
+        'not_liable", "verdict_confidence": 0.0-1.0, '
+        '"evidentiary_directive": ""|"produce_more"|"acquit", '
         '"sentence": {"custodial": bool, "term_years": num|null, '
         '"term_months": num|null, "fine_lkr": num|null, "conditions": [], '
         '"note": "..."}, "release": bool, "dissent_notes": "..."}'

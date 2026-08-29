@@ -44,7 +44,7 @@ class JudgeProfile(BaseModel):
 class BenchVerdict(BaseModel):
     """Aggregated result of a multi-judge bench."""
 
-    majority_verdict: str = ""  # guilty | not_guilty | liable | not_liable | insufficient_evidence
+    majority_verdict: str = ""  # guilty | not_guilty | liable | not_liable
     per_judge: dict[str, str] = Field(default_factory=dict)  # judge_id -> verdict
     dissents: list[str] = Field(default_factory=list)  # judge_ids who dissented
     dissent_summary: str = ""
@@ -139,9 +139,12 @@ class Judgment(BaseModel):
     facts_found: str
     legal_reasoning: str
     citations: list[str] = Field(default_factory=list)
-    verdict: str  # guilty | not_guilty | liable | not_liable | insufficient_evidence
+    verdict: str  # guilty | not_guilty | liable | not_liable  (binary, no 'insufficient_evidence')
     verdict_confidence: float = 0.0
-    insufficient_evidence: bool = False
+    # When the record is insufficient to convict, the judge either directs
+    # the parties to produce more evidence ('produce_more') or acquits
+    # ('acquit' == not_guilty). Default empty = a normal determination.
+    evidentiary_directive: str = ""
     sentence: Sentence | None = None
     release: bool = False
     dissent_notes: str = ""
@@ -180,7 +183,7 @@ class HistoricalCase(BaseModel):
     """An anonymized/hypothetical historical case with a known outcome."""
 
     case: CaseInput
-    ground_truth_verdict: str  # guilty | not_guilty | liable | not_liable | insufficient_evidence
+    ground_truth_verdict: str  # guilty | not_guilty | liable | not_liable
     notes: str = ""
 
 
