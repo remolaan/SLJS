@@ -80,8 +80,10 @@ export default function LiveTrial({ seeds, onJudgment }) {
   const startCase = async () => {
     setLoading(true); setError('')
     try {
-      const res = await fetch(`/api/seed-case/${seedKey}`)
-      if (!res.ok) throw new Error('seed not found')
+      // Try the scenario endpoint (Sri Lankan case types), fall back to seed-case.
+      let res = await fetch(`/api/scenario/${seedKey}`)
+      if (res.status === 404) res = await fetch(`/api/seed-case/${seedKey}`)
+      if (!res.ok) throw new Error('case not found')
       const caseInput = await res.json()
       const s = await api.startTrial(caseInput)
       setSnap(s); setTrialId(s.trial_id); setAutoplay(true)
@@ -157,7 +159,10 @@ export default function LiveTrial({ seeds, onJudgment }) {
       <div className="chat-header">
         <div className="chat-title">
           <h2>{snap?.case?.title || 'Choose a case to begin'}</h2>
-          {snap && <span className="you-tag">You are the accused — awaiting judgment</span>}
+          {snap && <span className="you-tag">{roleTag(snap.case)}</span>}
+          {snap?.case?.bench?.length > 1 && (
+            <span className="bench-tag">{snap.case.bench.length}-judge bench</span>
+          )}
         </div>
         <div className="chat-header-actions">
           <select className="case-pick" value={seedKey} onChange={(e) => setSeedKey(e.target.value)} disabled={loading}>
@@ -364,4 +369,13 @@ function renderText(raw) {
     .replace(/^-{3,}\s*$/gm, '')
     .replace(/\*\s/g, '• ')
     .replace(/^#{1,6}\s*/gm, '')
+}
+
+// Scenario-aware participant framing.
+function roleTag(caseInput) {
+  if (!caseInput) return ''
+  const ct = caseInput.case_type || 'criminal'
+  if (ct === 'civil') return 'You are a party to the civil dispute'
+  if (ct === 'appeal') return 'You are a party on appeal'
+  return 'You are the accused — awaiting judgment'
 }

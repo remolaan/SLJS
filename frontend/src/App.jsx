@@ -5,16 +5,14 @@ import Judgment from './components/Judgment.jsx'
 import Evaluation from './components/Evaluation.jsx'
 
 const SEED_CASES = [
-  {
-    key: 'market_altercation',
-    title: 'The Market Altercation',
-    description: 'Grievous hurt in a sudden quarrel (Penal Code s.324)',
-  },
-  {
-    key: 'shophouse_theft',
-    title: 'The Shophouse Theft',
-    description: 'Theft & house-trespass by night (s.367, s.431)',
-  },
+  { key: 'market_altercation', title: 'The Market Altercation', description: 'Grievous hurt (Penal Code s.324)' },
+  { key: 'shophouse_theft', title: 'The Shophouse Theft', description: 'Theft & house-trespass (s.367, s.431)' },
+  { key: 'minor_criminal', title: 'Minor Theft (Magistrate)', description: 'Police vs accused · 1 judge' },
+  { key: 'serious_criminal', title: 'Grievous Hurt (High Court)', description: 'AG vs accused · 1 judge' },
+  { key: 'trial_at_bar', title: 'Financial Fraud Trial-at-Bar', description: 'AG vs accused · 3-judge bench' },
+  { key: 'civil_dispute', title: 'Breach of Contract (Civil)', description: 'Plaintiff vs defendant · 1 judge' },
+  { key: 'criminal_appeal', title: 'Appeal (Court of Appeal)', description: 'Appellant vs respondent · 3 judges' },
+  { key: 'constitutional_appeal', title: 'FR Application (Supreme Court)', description: 'Petitioner vs respondent · 5 judges' },
 ]
 
 // LiveTrial exposes a callback to push the latest judgment up to App so the

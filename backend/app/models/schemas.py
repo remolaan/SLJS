@@ -18,6 +18,38 @@ class Proceeding(str, Enum):
     CIVIL = "civil"
 
 
+class CaseType(str, Enum):
+    """Structural model of the case per the Sri Lankan legal corrections.
+
+    - criminal: State/AG (prosecutor) vs Accused; victim is a witness.
+    - civil: Plaintiff + counsel vs Defendant + counsel; no state, no police.
+    - appeal: Appellant vs Respondent; briefs, not opening/evidence.
+    """
+
+    CRIMINAL = "criminal"
+    CIVIL = "civil"
+    APPEAL = "appeal"
+
+
+class JudgeProfile(BaseModel):
+    """One judge on the bench. A bench of N JudgeProfiles runs N judge calls."""
+
+    id: str = "J1"
+    name: str = "Judge 1 (pseudonym)"
+    bench_index: int = 0
+    is_presiding: bool = False
+    role_note: str = ""
+
+
+class BenchVerdict(BaseModel):
+    """Aggregated result of a multi-judge bench."""
+
+    majority_verdict: str = ""  # guilty | not_guilty | liable | not_liable | insufficient_evidence
+    per_judge: dict[str, str] = Field(default_factory=dict)  # judge_id -> verdict
+    dissents: list[str] = Field(default_factory=list)  # judge_ids who dissented
+    dissent_summary: str = ""
+
+
 class Charge(BaseModel):
     """A single charge, mapped to a Penal Code / statute provision."""
 
@@ -48,6 +80,7 @@ class CaseInput(BaseModel):
     title: str
     court_tier: CourtTier = CourtTier.HIGH
     proceeding: Proceeding = Proceeding.CRIMINAL
+    case_type: CaseType = CaseType.CRIMINAL
     jurisdiction: str = "Sri Lanka"
     parties: list[Party] = Field(default_factory=list)
     charges: list[Charge] = Field(default_factory=list)
@@ -57,6 +90,7 @@ class CaseInput(BaseModel):
         default="beyond reasonable doubt",
         description="civil: preponderance of the evidence",
     )
+    bench: list[JudgeProfile] = Field(default_factory=list)
 
 
 class StructuredCase(CaseInput):
@@ -111,6 +145,7 @@ class Judgment(BaseModel):
     sentence: Sentence | None = None
     release: bool = False
     dissent_notes: str = ""
+    bench_verdict: BenchVerdict | None = None
     methodology_warning: str = Field(
         default="AI simulation for research/education only — not a legal opinion."
     )

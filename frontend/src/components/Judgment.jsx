@@ -37,6 +37,26 @@ export default function Judgment({ judgment, sources = [], checks = [] }) {
         </div>
       </div>
 
+      {judgment.bench_verdict && (
+        <div className="bench-box">
+          <h3>⚖️ Bench deliberation ({Object.keys(judgment.bench_verdict.per_judge || {}).length}-judge bench)</h3>
+          <div className="bench-judges">
+            {Object.entries(judgment.bench_verdict.per_judge || {}).map(([id, v]) => (
+              <span key={id} className={`bench-judge-chip ${(judgment.bench_verdict.dissents || []).includes(id) ? 'dissent' : ''}`}>
+                {id}: <b>{v}</b>
+                {(judgment.bench_verdict.dissents || []).includes(id) ? ' (dissent)' : ''}
+              </span>
+            ))}
+          </div>
+          <div className="bench-majority">
+            Majority: <b>{judgment.bench_verdict.majority_verdict}</b>
+          </div>
+          {judgment.bench_verdict.dissent_summary && (
+            <div className="bench-dissent">Dissent: {judgment.bench_verdict.dissent_summary}</div>
+          )}
+        </div>
+      )}
+
       <div className="judgment-grid">
         {/* Left: the written judgment — ALL sections shown expanded */}
         <div className="j-col">

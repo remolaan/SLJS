@@ -24,6 +24,7 @@ from app.models.schemas import (
 from app.rag.store import get_vectorstore
 from app.seed.cases import SEED_CASES
 from app.seed.historical import DATASET_NAME, HISTORICAL_DATASET
+from app.seed.scenarios import SCENARIOS
 
 router = APIRouter(prefix="/api", tags=["trial"])
 
@@ -45,6 +46,28 @@ def get_seed_case(key: str) -> CaseInput:
     if key not in SEED_CASES:
         raise HTTPException(status_code=404, detail=f"Unknown seed case: {key}")
     return SEED_CASES[key]()
+
+
+@router.get("/scenarios")
+def list_scenarios() -> dict:
+    """List the Sri Lankan scenario templates (criminal/civil/appeal, bench sizes)."""
+    out = {}
+    for key, fn in SCENARIOS.items():
+        c = fn()
+        out[key] = {
+            "title": c.title,
+            "court_tier": c.court_tier.value,
+            "case_type": c.case_type.value,
+            "bench": len(c.bench),
+        }
+    return {"scenarios": out}
+
+
+@router.get("/scenario/{key}")
+def get_scenario(key: str) -> CaseInput:
+    if key not in SCENARIOS:
+        raise HTTPException(status_code=404, detail=f"Unknown scenario: {key}")
+    return SCENARIOS[key]()
 
 
 # --- one-shot (non-stepped) run ----------------------------------------------
@@ -144,6 +167,17 @@ def run_dataset_eval(include_witness: bool = True) -> EvaluationReport:
     store = get_runs_store(get_settings())
     store.save("eval_dataset", report.model_dump(mode="json"))
     return report
+
+
+@router.post("/evaluation/bench-consistency")
+def run_bench_consistency(historical: HistoricalCase) -> dict:
+    """Compare single-judge vs 3-judge bench on the same case (paper angle)."""
+    from app.eval.evaluate import bench_consistency
+
+    result = bench_consistency(historical, get_settings())
+    store = get_runs_store(get_settings())
+    store.save("bench_consistency", result)
+    return result
 
 
 # --- graph & store info --------------------------------------------------------

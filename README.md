@@ -38,6 +38,24 @@ Case Intake Agent ──▶ Prosecution ──▶ Defense ──▶ Witness (opt
 - **API:** FastAPI (`app/api/`)
 - **Frontend:** React + Vite courtroom UI (`frontend/`)
 
+## Sri Lankan legal model
+
+The simulation follows the real structure of the Sri Lankan courts, not a
+generic template:
+
+- **Criminal** cases are **State/AG vs Accused** — the victim is a witness, not
+  a party. **Civil** cases are **Plaintiff vs Defendant** (private counsel, no
+  state). **Appeals** are **Appellant vs Respondent**.
+- **Bench size varies by court & severity** and is modelled explicitly —
+  Magistrate (1), High Court (1), **Trial-at-Bar (3)**, District (1),
+  Court of Appeal (≥3), Supreme Court (3/5/7).
+- **Multi-judge benches** run N parallel judge agents then a deliberation /
+  voting node that returns a **majority verdict and records dissent**.
+
+Six scenario templates are available (`/api/scenarios`): minor criminal,
+serious criminal, trial-at-bar, civil dispute, criminal appeal, and a
+constitutional application. See `docs/legal_model.md`.
+
 ## Features
 
 - **Live demo player** — step a trial through like a real hearing: Continue /

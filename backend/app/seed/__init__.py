@@ -3,3 +3,4 @@ from app.seed.historical import (  # noqa: F401
     DATASET_NAME,
     HISTORICAL_DATASET,
 )
+from app.seed.scenarios import SCENARIOS  # noqa: F401

@@ -72,3 +72,35 @@ def evaluate_dataset(
         results=results,
         confusion=confusion,
     )
+
+
+def bench_consistency(case: HistoricalCase, settings: Settings) -> dict:
+    """Run the same case as single-judge and as a multi-judge bench and compare.
+
+    Returns the single vs multi verdicts and whether a dissent occurred. This
+    is the empirical angle described in the paper: does multi-judge deliberation
+    change the outcome or surface dissent?
+    """
+    from app.models.schemas import JudgeProfile
+
+    single = evaluate_one(case, settings, include_witness=False)
+    bench_case = case.case.model_copy(deep=True)
+    bench_case.bench = [
+        JudgeProfile(id="J1", name="Judge 1", bench_index=0, is_presiding=True),
+        JudgeProfile(id="J2", name="Judge 2", bench_index=1),
+        JudgeProfile(id="J3", name="Judge 3", bench_index=2),
+    ]
+    multi = evaluate_one(
+        HistoricalCase(case=bench_case, ground_truth_verdict=case.ground_truth_verdict, notes=case.notes),
+        settings,
+        include_witness=False,
+    )
+    return {
+        "case": single.case_title,
+        "single_verdict": single.predicted_verdict,
+        "multi_verdict": multi.predicted_verdict,
+        "same": single.predicted_verdict == multi.predicted_verdict,
+        "multi_confidence": multi.verdict_confidence,
+        "bench": multi.judgment.bench_verdict.model_dump() if (multi.judgment and multi.judgment.bench_verdict) else None,
+        "dissent": bool(multi.judgment and multi.judgment.bench_verdict and multi.judgment.bench_verdict.dissents),
+    }

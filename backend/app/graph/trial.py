@@ -6,16 +6,18 @@ from langgraph.graph import END, START, StateGraph
 
 from app.agents import (
     ClosingAgent,
-    DefenseAgent,
+    counsel_for,
     IntakeAgent,
     JudgeAgent,
-    ProsecutionAgent,
     WitnessAgent,
 )
 from app.config import Settings, get_settings
 from app.models.schemas import (
+    BenchVerdict,
     CaseInput,
     CaseResult,
+    CaseType,
+    JudgeProfile,
     Judgment,
     RetrievedContext,
     StructuredCase,
@@ -43,6 +45,7 @@ class TrialState(TypedDict, total=False):
     defense_closing: str
     retrieved_context: list[RetrievedContext]
     judgment: Judgment
+    bench_judgments: list  # per-judge judgments (multi-judge bench)
     result: CaseResult
     _llm: object
     _settings: Settings
@@ -50,6 +53,20 @@ class TrialState(TypedDict, total=False):
 
 def _emit(role: str, content: str, label: str = "", speaker: str = "") -> TranscriptTurn:
     return TranscriptTurn(role=role, speaker=speaker or label, label=label, content=content)
+
+
+def _case_type(case) -> CaseType:
+    return (case.case_type if hasattr(case, "case_type") and case.case_type else CaseType.CRIMINAL)
+
+
+def _prosecutor_role(case) -> str:
+    ct = _case_type(case)
+    return {"civil": "plaintiff", "appeal": "appellant"}.get(ct.value, "prosecution")
+
+
+def _defender_role(case) -> str:
+    ct = _case_type(case)
+    return {"civil": "defendant", "appeal": "respondent"}.get(ct.value, "defense")
 
 
 # --- node implementations -----------------------------------------------------
@@ -63,21 +80,27 @@ def intake_node(state: TrialState) -> dict:
 
 
 def prosecution_opening_node(state: TrialState) -> dict:
-    agent = ProsecutionAgent(state["_llm"])
-    text = agent.opening(state["case"])
-    return {"prosecution_opening": text, "transcript": [_emit("prosecution", text, label="Prosecution Opening")]}
+    case = state["case"]
+    cls = counsel_for(_case_type(case), "prosecution")
+    agent = cls(state["_llm"])
+    text = agent.opening(case)
+    return {"prosecution_opening": text, "transcript": [_emit(_prosecutor_role(case), text, label=f"{_prosecutor_role(case).title()} Opening")]}
 
 
 def defense_opening_node(state: TrialState) -> dict:
-    agent = DefenseAgent(state["_llm"])
-    text = agent.opening(state["case"], state.get("prosecution_opening", ""))
-    return {"defense_opening": text, "transcript": [_emit("defense", text, label="Defense Response")]}
+    case = state["case"]
+    cls = counsel_for(_case_type(case), "defense")
+    agent = cls(state["_llm"])
+    text = agent.opening(case, state.get("prosecution_opening", ""))
+    return {"defense_opening": text, "transcript": [_emit(_defender_role(case), text, label=f"{_defender_role(case).title()} Response")]}
 
 
 def prosecution_evidence_node(state: TrialState) -> dict:
-    agent = ProsecutionAgent(state["_llm"])
-    text = agent.evidence(state["case"])
-    return {"prosecution_evidence": text, "transcript": [_emit("prosecution", text, label="Prosecution Evidence")]}
+    case = state["case"]
+    cls = counsel_for(_case_type(case), "prosecution")
+    agent = cls(state["_llm"])
+    text = agent.evidence(case)
+    return {"prosecution_evidence": text, "transcript": [_emit(_prosecutor_role(case), text, label=f"{_prosecutor_role(case).title()} Evidence")]}
 
 
 def witness_node(state: TrialState) -> dict:
@@ -88,23 +111,29 @@ def witness_node(state: TrialState) -> dict:
 
 
 def defense_evidence_node(state: TrialState) -> dict:
-    agent = DefenseAgent(state["_llm"])
-    text = agent.evidence(state["case"])
-    return {"defense_evidence": text, "transcript": [_emit("defense", text, label="Defense Evidence")]}
+    case = state["case"]
+    cls = counsel_for(_case_type(case), "defense")
+    agent = cls(state["_llm"])
+    text = agent.evidence(case)
+    return {"defense_evidence": text, "transcript": [_emit(_defender_role(case), text, label=f"{_defender_role(case).title()} Evidence")]}
 
 
 def prosecution_closing_node(state: TrialState) -> dict:
-    agent = ClosingAgent(state["_llm"])
+    case = state["case"]
+    cls = counsel_for(_case_type(case), "prosecution")
+    agent = cls(state["_llm"])
     so_far = "\n".join(t.content for t in state["transcript"])
-    text = agent.for_side("prosecution", state["case"], so_far)
-    return {"prosecution_closing": text, "transcript": [_emit("prosecution", text, label="Prosecution Closing")]}
+    text = agent.closing(case) if hasattr(agent, "closing") else agent.brief(case)
+    return {"prosecution_closing": text, "transcript": [_emit(_prosecutor_role(case), text, label=f"{_prosecutor_role(case).title()} Closing")]}
 
 
 def defense_closing_node(state: TrialState) -> dict:
-    agent = ClosingAgent(state["_llm"])
+    case = state["case"]
+    cls = counsel_for(_case_type(case), "defense")
+    agent = cls(state["_llm"])
     so_far = "\n".join(t.content for t in state["transcript"])
-    text = agent.for_side("defense", state["case"], so_far)
-    return {"defense_closing": text, "transcript": [_emit("defense", text, label="Defense Closing")]}
+    text = agent.closing(case, state.get("prosecution_closing", "")) if hasattr(agent, "closing") else agent.brief(case, state.get("prosecution_closing", ""))
+    return {"defense_closing": text, "transcript": [_emit(_defender_role(case), text, label=f"{_defender_role(case).title()} Closing")]}
 
 
 def retrieve_node(state: TrialState) -> dict:
@@ -118,16 +147,68 @@ def retrieve_node(state: TrialState) -> dict:
 
 def judge_node(state: TrialState) -> dict:
     settings = state.get("_settings")
+    case = state["case"]
+    bench = case.bench or [JudgeProfile(id="J1", name="Judge 1 (pseudonym)", bench_index=0, is_presiding=True)]
     agent = JudgeAgent(state["_llm"])
-    raw = agent.judge(state["case"], state["transcript"], state.get("retrieved_context", []))
-    judgment = _parse_judgment(raw)
+
+    bench_judgments = []
+    for jp in bench:
+        raw = agent.judge(case, state["transcript"], state.get("retrieved_context", []), judge_profile=jp)
+        j = _parse_judgment(raw)
+        j.bench_verdict = None
+        bench_judgments.append((jp, j))
+
+    if len(bench) > 1:
+        judgment = _aggregate_bench(bench_judgments)
+    else:
+        judgment = bench_judgments[0][1]
+
     turn = _emit(
         "judge",
         f"VERDICT: {judgment.verdict}\n{judgment.legal_reasoning}\nCitations: {judgment.citations}",
         label="Judgment",
         speaker="The Court",
     )
-    return {"judgment": judgment, "transcript": [turn]}
+    return {"judgment": judgment, "bench_judgments": [j for _, j in bench_judgments], "transcript": [turn]}
+
+
+def _aggregate_bench(judgments) -> Judgment:
+    """Majority verdict across a multi-judge bench, recording dissents."""
+    votes: dict[str, int] = {}
+    per_judge: dict[str, str] = {}
+    dissents: list[str] = []
+    for jp, j in judgments:
+        per_judge[jp.id] = j.verdict
+        votes[j.verdict] = votes.get(j.verdict, 0) + 1
+    majority = max(votes, key=votes.get)
+    for jp, j in judgments:
+        if j.verdict != majority:
+            dissents.append(jp.id)
+
+    reasoning = "\n\n".join(f"[{jp.id}] {j.legal_reasoning}" for jp, j in judgments)
+    dissent_summary = "; ".join(
+        f"{jp.id} would have held {j.verdict}" for jp, j in judgments if j.verdict != majority
+    )
+
+    first = judgments[0][1]
+    return Judgment(
+        facts_found=first.facts_found,
+        legal_reasoning=reasoning,
+        citations=first.citations,
+        verdict=majority,
+        verdict_confidence=round(votes[majority] / len(judgments), 4),
+        insufficient_evidence=majority == "insufficient_evidence",
+        sentence=first.sentence,
+        release=first.release,
+        dissent_notes=dissent_summary,
+        bench_verdict=BenchVerdict(
+            majority_verdict=majority,
+            per_judge=per_judge,
+            dissents=dissents,
+            dissent_summary=dissent_summary,
+        ),
+        methodology_warning="AI simulation for research/education only — not a legal opinion.",
+    )
 
 
 def _parse_judgment(raw: str) -> Judgment:

@@ -78,6 +78,42 @@ auditable:
 The pipeline is implemented as a LangGraph state machine. *See
 `backend/app/graph/trial.py` for the canonical node order.*
 
+### 3.1.1 Jurisdictional fidelity (Sri Lankan legal model)
+
+The simulation is parameterized to reflect the real structure of the Sri Lankan
+courts, rather than a single generic trial template:
+
+- **Criminal cases** follow the common-law model: the **State / Attorney General
+  prosecutes**, not the victim. For serious (indictable) offences the AG's
+  Department prosecutes in the High Court; police prosecute only minor offences
+  in the Magistrate's Court. The **victim is a witness**, not a party with their
+  own counsel.
+- **Civil disputes** are between two private parties (plaintiff vs defendant),
+  each with their own lawyer; no state and no police.
+- **Appeals** (Court of Appeal / Supreme Court) run as appellant vs respondent,
+  with argument briefs rather than a fresh opening and evidence.
+
+**Bench size varies by court and case severity** and is modelled explicitly:
+
+| Scenario | Court | Bench |
+|----------|-------|-------|
+| Minor criminal | Magistrate's Court | 1 |
+| Serious criminal | High Court (ordinary) | 1 |
+| High-profile / financial (Trial-at-Bar) | High Court at Bar | 3 |
+| Civil dispute | District Court | 1 |
+| Criminal appeal | Court of Appeal | ≥ 3 |
+| Constitutional / FR application | Supreme Court | 3 / 5 / 7 |
+
+For multi-judge benches the single `judge` node becomes **N parallel Judge Agent
+calls** (each seeing the same transcript and RAG context) followed by a
+**deliberation / voting node** that aggregates a majority verdict and records
+dissent. This is a distinct research angle: it lets us study whether and how
+**multi-judge deliberation differs from single-judge output** — an empirical
+question that falls naturally out of modelling the jurisdiction correctly.
+
+*See `docs/legal_model.md` for the full corrections and `docs/architecture.md`
+for the implementation.*
+
 ### 3.2 RAG pipeline
 
 - **Corpus:** Constitution of Sri Lanka; Penal Code (No. 2 of 1883, as amended);

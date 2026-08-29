@@ -124,6 +124,147 @@ class ClosingAgent(Agent):
         )
 
 
+# --- scenario-aware civil / appeal counsel ------------------------------------
+
+class PlaintiffCounselAgent(Agent):
+    """Civil: represents the plaintiff (private party) against the defendant."""
+
+    role = "plaintiff"
+    system_prompt = (
+        "You are the Plaintiff's Counsel in a Sri Lankan civil action. You act "
+        "for a private party (the plaintiff), not the state. There is no "
+        "police or prosecutor. Duties: (1) open the claim and state the "
+        "relief sought; (2) present the plaintiff's evidence; (3) argue the "
+        "civil burden of proof (preponderance of the evidence). Never invent "
+        "facts beyond the case file. All parties are hypothetical."
+    )
+
+    def opening(self, case: StructuredCase) -> str:
+        return self.run(self._ctx(case, "opening statement"))
+    def evidence(self, case: StructuredCase) -> str:
+        return self.run(self._ctx(case, "presentation of plaintiff's evidence"))
+    def closing(self, case: StructuredCase) -> str:
+        return self.run(self._ctx(case, "closing argument"))
+
+    @staticmethod
+    def _ctx(case: StructuredCase, stage: str) -> str:
+        return (
+            f"CASE: {case.title}\nCourt: {case.court_tier.value}\n"
+            f"Proceeding: civil\nBurden: {case.burden_of_proof}\n"
+            f"Plaintiff: {', '.join(p.name for p in case.parties if p.role=='plaintiff')}\n"
+            f"Facts: {case.facts}\nEvidence: {[e.description for e in case.evidence]}\n"
+            f"\nSTAGE: {stage}."
+        )
+
+
+class DefendantCounselAgent(Agent):
+    """Civil: represents the defendant (private party)."""
+
+    role = "defendant"
+    system_prompt = (
+        "You are the Defendant's Counsel in a Sri Lankan civil action. You act "
+        "for a private party (the defendant) against the plaintiff. There is "
+        "no state involvement. Duties: (1) respond to the plaintiff's claim; "
+        "(2) raise defences and mitigating or exculpatory matters; (3) cite "
+        "civil law. Never invent facts. All parties are hypothetical."
+    )
+
+    def opening(self, case: StructuredCase, plaintiff_statement: str) -> str:
+        return self.run(self._ctx(case, "response", plaintiff_statement))
+    def evidence(self, case: StructuredCase) -> str:
+        return self.run(self._ctx(case, "defendant's evidence"))
+    def closing(self, case: StructuredCase, plaintiff_closing: str) -> str:
+        return self.run(self._ctx(case, "closing argument", plaintiff_closing))
+
+    @staticmethod
+    def _ctx(case: StructuredCase, stage: str, opponent: str = "") -> str:
+        return (
+            f"CASE: {case.title}\nCourt: {case.court_tier.value}\n"
+            f"Proceeding: civil\nBurden: {case.burden_of_proof}\n"
+            f"Defendant: {', '.join(p.name for p in case.parties if p.role=='defendant')}\n"
+            f"Facts: {case.facts}\n"
+            + (f"\nOpposing submission:\n{opponent}\n" if opponent else "")
+            + f"\nSTAGE: {stage}."
+        )
+
+
+class AppellantCounselAgent(Agent):
+    """Appeal: represents the appellant on appeal (criminal or civil)."""
+
+    role = "appellant"
+    system_prompt = (
+        "You are counsel for the Appellant in a Sri Lankan appeal. You "
+        "challenge the decision below on the grounds of appeal (error of law, "
+        "misdirection, procedural error, or error on the evidence). You "
+        "present written/argument-based briefs, not a fresh opening or "
+        "evidence. Never invent facts. All parties are hypothetical."
+    )
+
+    def brief(self, case: StructuredCase) -> str:
+        return self.run(self._ctx(case, "appellant's submissions"))
+
+    def opening(self, case: StructuredCase) -> str:
+        return self.brief(case)
+    def evidence(self, case: StructuredCase) -> str:
+        return self.brief(case)
+    def closing(self, case: StructuredCase, opponent: str = "") -> str:
+        return self.brief(case)
+
+    @staticmethod
+    def _ctx(case: StructuredCase, stage: str) -> str:
+        return (
+            f"CASE: {case.title}\nCourt: {case.court_tier.value}\n"
+            f"Proceeding: {case.case_type.value}\nFacts: {case.facts}\n"
+            f"\nSTAGE: {stage}."
+        )
+
+
+class RespondentCounselAgent(Agent):
+    """Appeal: represents the respondent (AG or other side) in defence of the decision."""
+
+    role = "respondent"
+    system_prompt = (
+        "You are counsel for the Respondent in a Sri Lankan appeal. You "
+        "defend the decision below against the appellant's grounds of appeal, "
+        "on the record and on the law. Never invent facts. All parties are "
+        "hypothetical."
+    )
+
+    def brief(self, case: StructuredCase, appellant_brief: str = "") -> str:
+        return self.run(
+            f"CASE: {case.title}\nCourt: {case.court_tier.value}\n"
+            f"Facts: {case.facts}\n\nAppellant's submissions:\n{appellant_brief}\n\n"
+            f"Deliver the respondent's submissions."
+        )
+
+    def opening(self, case: StructuredCase, opponent: str = "") -> str:
+        return self.brief(case, opponent)
+    def evidence(self, case: StructuredCase) -> str:
+        return self.brief(case)
+    def closing(self, case: StructuredCase, opponent: str = "") -> str:
+        return self.brief(case, opponent)
+
+    @staticmethod
+    def _ctx(case: StructuredCase, stage: str) -> str:
+        return (
+            f"CASE: {case.title}\nCourt: {case.court_tier.value}\n"
+            f"Proceeding: {case.case_type.value}\nFacts: {case.facts}\n"
+            f"\nSTAGE: {stage}."
+        )
+
+
+def counsel_for(case_type, side):
+    """Return the appropriate counsel agent class for a scenario + side."""
+    from app.models.schemas import CaseType
+
+    if case_type == CaseType.CIVIL:
+        return PlaintiffCounselAgent if side in ("plaintiff", "prosecution", "appellant") else DefendantCounselAgent
+    if case_type == CaseType.APPEAL:
+        return AppellantCounselAgent if side in ("appellant", "plaintiff", "prosecution") else RespondentCounselAgent
+    # criminal: state prosecutor vs defense
+    return ProsecutionAgent if side in ("prosecution", "plaintiff", "appellant") else DefenseAgent
+
+
 class JudgeAgent(Agent):
     """Weighs both sides, applies burden of proof, issues structured judgment."""
 
@@ -160,18 +301,28 @@ class JudgeAgent(Agent):
         case: StructuredCase,
         transcript: list,
         retrieved_context: list,
+        judge_profile=None,
     ) -> str:
         context_txt = (
             "\n".join(f"[{c.source}][rel {c.relevance}] {c.text}" for c in retrieved_context)
             or "(No law retrieved — reason on general principles only.)"
         )
         transcript_txt = "\n".join(f"[{t.role}] {t.content}" for t in transcript)
+        bench_txt = ""
+        if judge_profile is not None:
+            bench_txt = (
+                f"\nYou are {judge_profile.name} (judge {judge_profile.bench_index + 1} "
+                f"of a {case.bench.__len__() if case.bench else 1}-judge bench)."
+                + (" You are the presiding judge." if judge_profile.is_presiding else "")
+                + " Deliver your own independent judgment; do not assume what the other judges decide.\n"
+            )
         prompt = (
             f"CASE: {case.title}\nCourt: {case.court_tier.value}\n"
-            f"Proceeding: {case.proceeding.value}\n"
+            f"Proceeding: {case.case_type.value}\n"
             f"Burden of proof: {case.burden_of_proof}\n"
             f"Charges: {case.charges}\nMapped offences: {case.mapped_offences}\n"
             f"Facts: {case.facts}\n"
+            f"{bench_txt}"
             f"\nRETRIEVED LAW (cite only from here):\n{context_txt}\n"
             f"\nFULL TRIAL TRANSCRIPT:\n{transcript_txt}\n"
             f"\nDeliver your structured judgment as JSON."

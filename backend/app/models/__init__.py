@@ -1,6 +1,8 @@
 from app.models.schemas import (  # noqa: F401
+    BenchVerdict,
     CaseInput,
     CaseResult,
+    CaseType,
     Charge,
     CitationCheck,
     CourtTier,
@@ -8,6 +10,7 @@ from app.models.schemas import (  # noqa: F401
     EvaluationResult,
     EvidenceItem,
     HistoricalCase,
+    JudgeProfile,
     Judgment,
     Party,
     Proceeding,
