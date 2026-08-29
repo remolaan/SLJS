@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import { api } from '../api.js'
 import Avatar, { CHARACTERS } from './Avatar.jsx'
 import SpotlightBar from './SpotlightBar.jsx'
-import SceneVisualizer from './SceneVisualizer.jsx'
+import Courtroom3D from './Courtroom3D.jsx'
 
 const CHAT_ROLES = ['judge', 'prosecution', 'defense', 'witness', 'intake']
 
@@ -244,7 +244,7 @@ export default function LiveTrial({ seeds, onJudgment }) {
             </button>
           </div>
         ) : (
-          <SceneVisualizer snapshot={snap} />
+          <Courtroom3D snapshot={snap} />
         )}
       </div>
     </div>
